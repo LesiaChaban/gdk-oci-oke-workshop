@@ -1,8 +1,8 @@
-# Build and run the application and view the logs in OCI Logging
+# Build and run the application
 
 ## Introduction
 
-This section of the lab takes you through the steps to build and run the sample application and send application logs to OCI Logging.
+This section of the lab takes you through the steps to build and run the sample application.
 
 Estimated Lab Time: 10 minutes
 
@@ -11,50 +11,29 @@ Estimated Lab Time: 10 minutes
 In this lab, you will:
 
 * Build and run the application
-* Send an HTTP POST request
-* View the application logs in OCI Logging
+* Send a requests to publish metrics to OCI Metrics
 
-## Task 1: Build and run the application
+## Task 1: Build and run the application with `mn:run`
 
-1. Open a new terminal in VS Code using the **Terminal > New Terminal** menu.
+1. From the same terminal in VS Code, run the following command with `mn:run` to build and start the application on port 8080.
 
-2. Run the following command to build application:
+``` bash
+<copy>
+./mvnw install -pl lib -am && MICRONAUT_ENVIRONMENTS=oraclecloud ./mvnw mn:run -pl oci
+</copy>
+```
 
-<if type="mn_run">
-
-   Use `mn:run` to build and start the application on port 8080.
-
-	``` bash
-	<copy>
-	./mvnw install -pl lib -am && MICRONAUT_ENVIRONMENTS=oraclecloud ./mvnw mn:run -pl oci
-	</copy>
-	```
-</if>
-
-<if type="jar">
-
-   Build an executable JAR file and then use `java -jar` to run it.
-
-	``` bash
-	<copy>
-	./mvnw install -pl lib -am && ./mvnw package -pl oci
-
-	MICRONAUT_ENVIRONMENTS=oraclecloud java -jar oci/target/oci-logging-demo-oci-1.0-SNAPSHOT.jar
-	</copy>
-	```
-</if>
-
-## Task 2: Send an HTTP POST request
+## Task 2: Send a requests to publish metrics to OCI Metrics
 
 1. Open a second terminal in VS Code using the **Terminal>New Terminal** menu.
 
-2. From the second terminal, send an HTTP POST request to the `/greet` endpoint:
+2. From the second terminal, send a few test requests (2 each) with cURL, as follows:
 
-	``` bash
-	<copy>
-	curl -X POST -H "Content-Type: application/json" -id '{"message":"Hello GCN Logging!"}' http://localhost:8080/greet
-	</copy>
-	```
+	a) Get all the books:
+
+   ``` bash
+   curl localhost:8080/books | jq
+   ```
 
 	VS Code may prompt you to open the URL in a browser as shown below. Just click the **Configure Notifications** gear icon and then click **Don't Show Again**.
 
@@ -62,19 +41,41 @@ In this lab, you will:
 
    ![VS Code ](images/vscode-dont-show-again.png)
 
+	b) Get a book by its ISBN:
+
+   ``` bash
+   curl localhost:8080/books/9781680502398 | jq
+   ```
+
+   c) Get a list of all the available metrics:
+
+   ``` bash
+   curl localhost:8080/metrics | jq
+   ```
+
+   d) Get a particular metric value:
+
+   ``` bash
+   curl localhost:8080/metrics/http.server.requests | jq
+   ```
+
+   e) Get the value of the metric created on the `/books` endpoint: 
+
+   ``` bash
+   curl localhost:8080/metrics/books.index | jq
+   ```
+
+   f) Get the value of the custom metric that contains the total number of books containing the word "microservices" in their title:
+
+   ``` bash
+   curl localhost:8080/metrics/microserviceBooksNumber.latest | jq
+   ```
+
 ## Task 3: Stop the application
 
 1. In the first terminal in VS Code, use `CTRL+C` to stop the application.
 
-## Task 4: View the application logs in OCI Logging
-
-1. Go to the **OCI Console >> Logging >> Log Groups >> MicronautLogGroup >> MicronautCustomLog >> Custom Log (MicronautCustomLog) Details** screen opened in the browser. The application logs should appear in the **Explore Log** section. (If necessary, refresh the browser.)
-
-	You can select a different value such as "Past 15 minutes" or "Past hour" in the **Filter by time** drop down list to refresh the logs table view.
-
-   ![Application Logs](./images/application-logs-jvm.jpg)
-
-Congratulations! You've successfully completed this lab. Your Java application can successfully send logs to OCI Logging.
+Congratulations! You've successfully completed this lab. Your Java application can successfully publish metrics to OCI Monitoring.
 
 You may now **proceed to the next lab**.
 

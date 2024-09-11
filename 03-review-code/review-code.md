@@ -4,7 +4,7 @@
 
 This lab reviews the sample Micronaut application code used in the workshop. The application source code and build scripts are available for review in VS Code.
 
-You'll see how easy it is to configure a Micronaut application to send logs to OCI Logging with the GDK.
+You'll see how easy it is to configure a Micronaut application to publish metrics to OCI Monitoring with the GDK.
 
 Estimated Time: 10 minutes
 

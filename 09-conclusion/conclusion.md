@@ -1,6 +1,6 @@
 # Conclusion
 
-In this workshop, you've learnt how to configure a Micronaut application to send application logs to OCI Logging using the GDK.
+In this workshop, you've learnt how to build a Micronaut application to publish standard and custom metrics to OCI Monitoring with the GDK, and to query and visualize the published metrics using the OCI Metrics Explorer.
 
 You've seen how to use GraalVM Native Image to package and run the application as a native executable.
 
@@ -8,10 +8,8 @@ Application developers can use the Graal Development Kit for Micronaut (GDK) to 
 
 ## Learn More
 
-- [Publish Application Logs to OCI Logging](https://graal.cloud/gdk/gdk-modules/logging/micronaut-oci-logging/?buildTool=maven&lang=java)
-- [GDK Logging](https://graal.cloud/gdk/modules/#logging)
-- [Micronaut Oracle Cloud Logging](https://micronaut-projects.github.io/micronaut-oracle-cloud/snapshot/guide/#logging)
-- [Micronaut Oracle Cloud Authentication](https://micronaut-projects.github.io/micronaut-oracle-cloud/snapshot/guide/#authentication)
+- [Create a Micronaut Database Application to Collect Metrics and Monitor Them on Oracle Cloud](https://graal.cloud/gdk/gdk-modules/metrics/micronaut-metrics-db-oci/?buildTool=maven&lang=java)
+- [GDK Metrics](https://graal.cloud/gdk/modules/#metrics)
 
 ## Acknowledgements
 

@@ -1,8 +1,8 @@
-# Build and run a native executable and view the logs in OCI Logging
+# Build and run a native executable
 
 ## Introduction
 
-This lab describes how to build and run a native executable for the application, and send logs to OCI Logging.
+This lab describes how to build and run a native executable for the application.
 
 You will use [GraalVM Native Image](https://docs.oracle.com/en/graalvm/jdk/17/docs/overview/)’s ahead-of-time compilation to build a native executable for the application.
 
@@ -10,17 +10,56 @@ At build time, GraalVM analyzes a Java application and its dependencies to ident
 
 Native executables built with GraalVM require less memory, are smaller in size, and start upto 100x faster than just-in-time compiled applications running on a Java Virtual Machine.
 
+For this step you will start a local MySQL container, update the datasources default URL, username, and password in the  _oci/src/main/resources/application-oraclecloud.properties_ file, build the native executable and run the native executable with the local MySQL database.
+
 Estimated Lab Time: 15 minutes
 
 ### Objectives
 
 In this lab, you will:
 
+* Configure the application to use local MySQL database
 * Build and run a native executable for the application
-* Send an HTTP POST request
-* View the application logs in OCI Logging
+* Send a requests to publish metrics to OCI Metrics
 
-## Task 1: Build and run a native executable for the application
+## Task 1: Configure the application to use local MySQL database
+
+1. Open a third terminal in VS Code using the **Terminal>New Terminal** menu.
+
+2. Copy the following command to run a MySQL container:
+
+   ``` bash
+   docker run -it --rm \
+   --name "mysql.latest" \
+   -p 3306:3306 \
+   -e MYSQL_DATABASE=db \
+   -e MYSQL_USER=sherlock \
+   -e MYSQL_PASSWORD=elementary \
+   -e MYSQL_ALLOW_EMPTY_PASSWORD=true \
+   container-registry.oracle.com/mysql/community-server:latest
+   ```
+
+3. Place your cursor in the terminal in VS Code and paste (`CTRL+SHIFT+V`) the command you copied. A dialog box will ask **Are you sure you want to paste 8 lines of text in to the terminal?**. Select **Do not ask me again** and click **Paste** to proceed.
+
+	![VS Code Question Icon](./images/paste-mysql-8-confirm.jpg#input)
+
+   Press the enter (return) key. The MySQL container starts in a few seconds. When MySQL is up and running, you will see a message in the terminal window similar to:
+
+   ``` bash
+   ... [Server] /usr/sbin/mysqld: ready for connections. Version: '9.0.1'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Server - GPL.
+   ```
+
+4. Uncomment the `url`, `username` and `password` under the `datasources.default` property in _oci/src/main/resources/application-oraclecloud.properties_:
+
+   ``` properties
+   datasources.default.url=${DATASOURCES_DEFAULT_URL:`jdbc:mysql://localhost:3306/db`}
+   datasources.default.username=${DATASOURCES_DEFAULT_USERNAME:sherlock}
+   datasources.default.password=${DATASOURCES_DEFAULT_PASSWORD:elementary}
+   ```
+
+   Save the file (`CTRL+S`).
+
+## Task 2: Build and run a native executable for the application
 
 1. In the first terminal in VS Code, check the version of the GraalVM native-image utility:
 
@@ -44,35 +83,57 @@ In this lab, you will:
 
 	``` bash
 	<copy>
-	MICRONAUT_ENVIRONMENTS=oraclecloud oci/target/oci-logging-demo-oci
+	MICRONAUT_ENVIRONMENTS=oraclecloud oci/target/oci-metrics-demo-oci
 	</copy>
 	```
 
    The native executable starts instantaneously.
 
-## Task 2: Send an HTTP POST request
+## Task 3: Send a requests to publish metrics to OCI Metrics
 
-1. From the second terminal, send an HTTP POST request to the `/greet` endpoint:
+1. From the second terminal, send a few test requests (2 each) with cURL, as follows:
 
-	``` bash
-	<copy>
-	curl -X POST -H "Content-Type: application/json" -id '{"message":"Hello GCN Logging native executable!"}' http://localhost:8080/greet
-	</copy>
-	```
+	a) Get all the books:
 
-## Task 3: Stop the application
+   ``` bash
+   curl localhost:8080/books | jq
+   ```
+
+	b) Get a book by its ISBN:
+
+   ``` bash
+   curl localhost:8080/books/9781680502398 | jq
+   ```
+
+   c) Get a list of all the available metrics:
+
+   ``` bash
+   curl localhost:8080/metrics | jq
+   ```
+
+   d) Get a particular metric value:
+
+   ``` bash
+   curl localhost:8080/metrics/http.server.requests | jq
+   ```
+
+   e) Get the value of the metric created on the `/books` endpoint: 
+
+   ``` bash
+   curl localhost:8080/metrics/books.index | jq
+   ```
+
+   f) Get the value of the custom metric that contains the total number of books containing the word "microservices" in their title:
+
+   ``` bash
+   curl localhost:8080/metrics/microserviceBooksNumber.latest | jq
+   ```
+
+## Task 4: Stop the application
 
 1. In the first terminal in VS Code, use `CTRL+C` to stop the application.
 
-## Task 4: View the application logs in OCI Logging
-
-1. Go to the **OCI Console >> Logging >> Log Groups >> MicronautLogGroup >> MicronautCustomLog >> Custom Log (MicronautCustomLog) Details** screen opened in the browser. The application logs should appear in the **Explore Log** section. (If necessary, refresh the browser.)
-
-	You can select a different value such as "Past 15 minutes" or "Past hour" in the **Filter by time** drop down list to refresh the logs table view.
-
-	![Application Logs](./images/application-logs-native.jpg)
-
-Congratulations! You've successfully completed this lab. Your Java application native executable can successfully send logs to OCI Logging.
+Congratulations! You've successfully completed this lab. Your Java application native executable can successfully publish metrics to OCI Monitoring.
 
 You may now **proceed to the next lab**.
 
