@@ -44,10 +44,7 @@
     {
       "title": "Lab 4: Build and Run the Application",
       "filename": "../../05-build-run-app/build-run-app.md",
-      "type" : {
-        "mn_run" : "mn:run",
-        "jar" : "JAR"
-      }
+      "type" : "tenancy"
     },
     {
       "title": "Lab 5: Build and Run a Native Executable",
