@@ -31,9 +31,11 @@ In this lab, you will:
 
 	a) Get all the books:
 
-   ``` bash
-   curl localhost:8080/books | jq
-   ```
+	``` bash
+	<copy>
+	curl localhost:8080/books | jq
+	</copy>
+	```
 
 	VS Code may prompt you to open the URL in a browser as shown below. Just click the **Configure Notifications** gear icon and then click **Don't Show Again**.
 
@@ -43,33 +45,43 @@ In this lab, you will:
 
 	b) Get a book by its ISBN:
 
-   ``` bash
-   curl localhost:8080/books/9781680502398 | jq
-   ```
+	``` bash
+	<copy>
+	curl localhost:8080/books/9781680502398 | jq
+	</copy>
+	```
 
    c) Get a list of all the available metrics:
 
-   ``` bash
-   curl localhost:8080/metrics | jq
-   ```
+	``` bash
+	<copy>
+	curl localhost:8080/metrics | jq
+	</copy>
+	```
 
    d) Get a particular metric value:
 
-   ``` bash
-   curl localhost:8080/metrics/http.server.requests | jq
-   ```
+	``` bash
+	<copy>
+	curl localhost:8080/metrics/http.server.requests | jq
+	</copy>
+	```
 
-   e) Get the value of the metric created on the `/books` endpoint: 
+   e) Get the value of the metric created on the `/books` endpoint:
 
-   ``` bash
-   curl localhost:8080/metrics/books.index | jq
-   ```
+	``` bash
+	<copy>
+	curl localhost:8080/metrics/books.index | jq
+	</copy>
+	```
 
    f) Get the value of the custom metric that contains the total number of books containing the word "microservices" in their title:
 
-   ``` bash
-   curl localhost:8080/metrics/microserviceBooksNumber.latest | jq
-   ```
+	``` bash
+	<copy>
+	curl localhost:8080/metrics/microserviceBooksNumber.latest | jq
+	</copy>
+	```
 
 ## Task 3: Stop the application
 

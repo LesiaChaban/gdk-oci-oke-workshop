@@ -10,9 +10,9 @@ Estimated Lab Time: 05 minutes
 
 In this lab, you will:
 
-* Configure the Application to Use the OCI Monitoring
+* Configure the application to use the OCI Monitoring
 
-## Task 1: Configure the Application to Use the OCI Monitoring
+## Task 1: Configure the Application to use the OCI Monitoring
 
 1. From the Oracle Cloud Console, open the navigation menu, navigate to  **Identity & Security >> Compartments** , find your workshop compartment in the list, open it, in the **Compartment Information** section click **Copy** to copy the value of the compartment OCID.
 

@@ -35,7 +35,7 @@ In this workshop, you will:
 * Configure the application to use OCI Monitoring
 * Build a native executable for the application using GraalVM Native Image
 * Run the application and publish standard and custom metrics to OCI Monitoring
-* Visualize the metrics in Metrics Explorer from the Oracle Cloud Console
+* View the published metrics in OCI Monitoring
 
 ### Prerequisites
 

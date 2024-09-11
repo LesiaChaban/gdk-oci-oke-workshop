@@ -211,7 +211,7 @@ micronaut.metrics.export.oraclecloud.compartmentId=${COMPARTMENT_OCID}
 
 **Note:** This way (`property: ${<placeholder>}`) of defining properties enables you to externalize the configuration easily. In this example, the value is picked up from an environment variable named `COMPARTMENT_OCID`.
 
-In the next section, you will configure the application to to use OCI Monitoring.
+In the next section, you will configure the application to use OCI Monitoring.
 
 You may now **proceed to the next lab**.
 
