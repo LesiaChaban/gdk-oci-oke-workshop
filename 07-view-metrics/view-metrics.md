@@ -36,7 +36,7 @@ In this lab, you will:
 
 8. Scroll up to visualize the selected metric.
 
-    ![Metrics Chart](images/updated-metrics-chart.jpg#input)
+    ![Metrics Chart](images/updated-metrics-chart.png#input)
 
 
 Congratulations! You've successfully completed this lab. You can visualize the metrics published by the sample application in the OCI Metrics Explorer.
