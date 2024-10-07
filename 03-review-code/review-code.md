@@ -89,7 +89,7 @@ Optional<Book> findBook(String isbn) {
 
 ## Task 3: Review the Service Class
 
-The service class `MicroserviceBooksNumberService` retrieves information from the database and publishes custom metrics based on it. In this example, the custom metrics reflect the number of books containing the word "microservices" in their title..
+The service class `MicroserviceBooksNumberService` retrieves information from the database and publishes custom metrics based on it. In this example, the custom metrics reflect the number of books containing the word "microservices" in their title.
 
 _lib/src/main/java/com/example/MicroserviceBooksNumberService.java_
 
@@ -174,7 +174,7 @@ VALUES ("9781491950357", "Building Microservices"),
        ("9781617294549", "Microservices Patterns");
 ```
 
-## Task 4: Review the Metrics Collection Configuration
+## Task 5: Review the Metrics Collection Configuration
 
 Several groups of metrics are enabled by default: these include system metrics (such as JVM information and uptime), as well as metrics tracking web requests, data sources activity, and others.
 

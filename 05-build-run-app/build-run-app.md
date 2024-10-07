@@ -11,7 +11,7 @@ Estimated Lab Time: 10 minutes
 In this lab, you will:
 
 * Build and run the application
-* Send a requests to publish metrics to OCI Metrics
+* Send requests to publish metrics to OCI Metrics
 
 ## Task 1: Build and run the application with `mn:run`
 
@@ -23,7 +23,7 @@ In this lab, you will:
 </copy>
 ```
 
-## Task 2: Send a requests to publish metrics to OCI Metrics
+## Task 2: Send requests to publish metrics to OCI Metrics
 
 1. Open a second terminal in VS Code using the **Terminal>New Terminal** menu.
 

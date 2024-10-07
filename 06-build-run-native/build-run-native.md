@@ -20,7 +20,7 @@ In this lab, you will:
 
 * Configure the application to use local MySQL database
 * Build and run a native executable for the application
-* Send a requests to publish metrics to OCI Metrics
+* Send requests to publish metrics to OCI Metrics
 
 ## Task 1: Configure the application to use local MySQL database
 
@@ -91,7 +91,7 @@ In this lab, you will:
 
    The native executable starts instantaneously.
 
-## Task 3: Send a requests to publish metrics to OCI Metrics
+## Task 3: Send requests to publish metrics to OCI Metrics
 
 1. From the second terminal, send a few test requests (2 each) with cURL, as follows:
 
