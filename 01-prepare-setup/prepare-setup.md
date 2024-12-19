@@ -22,7 +22,7 @@ This lab assumes you have:
 
 1. Click on the link below to download the Resource Manager zip file you need to build your environment:
 
-    * [gdk-oci-metrics-ll-orm.zip](https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/oci-library/gdk-oci-metrics-ll-orm.zip)
+    * [gdk-oci-oke-ll-orm.zip](https://c4u04.objectstorage.us-ashburn-1.oci.customer-oci.com/p/EcTjWk2IuZPZeNnD_fYMcgUhdNDIDA6rt9gaFj_WZMiL7VvxPBNMY60837hu5hga/n/c4u04/b/livelabsfiles/o/oci-library/gdk-oci-oke-ll-orm.zip)
 
 2. Save it in your downloads folder.
 
@@ -61,7 +61,7 @@ However, if you would rather use an existing VCN/subnet, follow these steps to a
 
 ## Task 3: Select a Compartment for the Workshop
 
-We recommend you use a single compartment for the workshop. We will refer to this as your workshop compartment. This is the compartment where you will provision all the resources - Oracle Resource Manager (ORM) Stack, Compute Instance, VCN/Subnet - needed for the workshop.
+We recommend you use a single compartment for the workshop. We will refer to this as your workshop compartment. This is the compartment where you will provision all the resources - Oracle Resource Manager (ORM) Stack, Compute Instance, VCN/Subnet, Instance Principals, Policies, Kubernetes Clusters (OKE), OCI Object Storage - needed for the workshop.
 
 1. From the Oracle Cloud Console navigation menu, go to **Identity & Security >> Identity >> Compartments**.
 2. Go to your workshop compartment.

@@ -18,22 +18,22 @@ In this lab, you will:
 
 2. Clone the sample application source code.
 
-	```bash
+	``` bash
 	<copy>
 	git init lab
 	cd lab
-	git remote add origin https://github.com/sachin-pikle/gdk-oci-samples.git
+	git remote add origin https://github.com/oracle-samples/gdk-micronaut-samples.git
 	git config core.sparsecheckout true
-	echo "gdk-oci-metrics-mvn/*">>.git/info/sparse-checkout
+	echo "gdk-oci-oke/*">>.git/info/sparse-checkout
 	git pull --depth=1 origin main
 	</copy>
 	```
 
-3. Open the sample application source code from the _gdk-oci-metrics-mvn_ directory in **Visual Studio Code**.
+3. Open the sample application source code from the _gdk-oci-oke_ directory in **Visual Studio Code**.
 
-	```bash
+	``` bash
 	<copy>
-	code gdk-oci-metrics-mvn
+	code gdk-oci-oke
 	</copy>
 	```
 

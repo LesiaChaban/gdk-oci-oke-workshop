@@ -2,9 +2,12 @@
 
 ## About this Workshop
 
-This workshop takes you step by step through the process of building a Java application to publish standard and custom metrics to Oracle Cloud Infrastructure (OCI) Monitoring using the Graal Development Kit for Micronaut (GDK). It shows you how to query and visualize the published metrics using the OCI Metrics Explorer. You'll use GraalVM Native Image to package and run the application as a native executable.
 
-It is aimed at application developers and DevOps engineers with a basic knowledge of Java.
+This workshop takes you step by step through the process of deploying a Java application to OCI Kubernetes Clusters (OKE) and upload, download, and delete files from Oracle Cloud Infrastructure (OCI) Object Storage using the Graal Development Kit for Micronaut (GDK).
+Kubernetes Clusters (OKE) service.
+You'll use GraalVM Native Image to package and run the application as a native executable.
+
+It is aimed at application developers and DevOps engineers with an intermediate knowledge of Java.
 
 Estimated Workshop Time: 75 minutes
 
@@ -31,11 +34,13 @@ The GDK modules are designed for ahead-of-time compilation with GraalVM Native I
 In this workshop, you will:
 
 * Use Visual Studio Code (VS Code) from a remote desktop running in an OCI Compute Instance
+* Provision a new OCI Kubernetes Cluster
+* Provision a new OCI Object Storage bucket and Container Repository
 * Review the application source code developed with the Graal Development Kit for Micronaut
-* Configure the application to use OCI Monitoring
-* Build a native executable for the application using GraalVM Native Image
-* Run the application and publish standard and custom metrics to OCI Monitoring
-* View the published metrics in OCI Monitoring
+* Configure the application
+* Build a native executable for the application using GraalVM Native Image and push the application to a Container Repository
+* Deploy the application to OCI OKE
+* Test the application with the OCI Object Storage bucket
 
 ### Prerequisites
 
