@@ -1,8 +1,8 @@
-# Configure the Application to use the OCI Autonomous Database Instance
+# Configure the Application
 
 ## Introduction
 
-This lab provides instructions to configure the application to connect to the OCI Autonomous Database instance using credentials stored as secrets in the OCI Vault.
+This lab provides instructions to configure the application to connect to the OCI Kubernetes Cluster(OKE).
 
 The [Micronaut Oracle Cloud](https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/index.html) project provides integration between Micronaut applications and Oracle Cloud, including using Vault as a distributed configuration source.
 
@@ -13,64 +13,80 @@ Estimated Lab Time: 05 minutes
 In this lab, you will:
 
 * Confirm the Application dependencies
-* Configure the Application to read secrets stored in OCI Vault
-* Configure the Application to connect to the OCI Autonomous Database instance
+* Configure Environment Variables
+* Configure the Application to connect to the Oracle Cloud Infrastructure Registry
 * Configure OCI Instance Principal Authentication
 
-## Task 1: Confirm the Application dependencies
 
-1. In VS Code, open _oci/pom.xml_.
+export OCI_CLUSTER_ID="ocid1.cluster.oc1.iad.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+export OCI_COMPARTMENT_ID="ocid1.compartment.oc1..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+Copy
+The export command syntax varies per platform. Expand to learn more.
+3.2. Authenticate to Oracle Cloud Infrastructure Registry 
+Create an AUTH_TOKEN to authenticate to Oracle Cloud Infrastructure Registry (also known as Container Registry). (Oracle Cloud Infrastructure restricts you to two authentication tokens at the same time. If you already have two tokens, use an existing one or delete one that you are not using.)
 
-2. Confirm the _oci/pom.xml_ file contains a dependency on the `micronaut-oraclecloud-vault` library.
+Export the AUTH_TOKEN variable:
+ export AUTH_TOKEN=$(oci iam auth-token create --user-id $OCI_USER_ID --description gdk-k8s-token | jq -r '.data.token')
+Copy
+Run the next command to log in to ocir.io (Container Registry):
+ docker login $OCI_REGION.ocir.io -u $OCIR_USERNAME -p $AUTH_TOKEN
+Copy
+The command should complete by printing “Login Succeeded”. (It may take some time before your authentication token activates.)
 
-    _oci/pom.xml_
 
-    ``` xml
-    <dependency>
-        <groupId>io.micronaut.oraclecloud</groupId>
-        <artifactId>micronaut-oraclecloud-vault</artifactId>
-        <scope>compile</scope>
-    </dependency>
-    ```
+## Task 1: Confirm the Application properties
 
-## Task 2: Configure the Application to read secrets stored in OCI Vault
+1. In VS Code, open `application-oraclecloud.properties`. The application configuration uses two environment variables `OCI_OS_BUCKET_NAME` and `OCI_OS_NS`.
 
-1. Confirm the distributed configuration feature is enabled using the `micronaut.config-client.enabled` flag in the _bootstrap-oraclecloud.properties_ file.
+	_oci/src/main/resources/application-oraclecloud.properties_
 
-    _oci/src/main/resources/bootstrap-oraclecloud.properties_
+	``` properties
+	micronaut.object-storage.oracle-cloud.default.bucket=${OCI_OS_BUCKET_NAME}
+	micronaut.object-storage.oracle-cloud.default.enabled=true
+	micronaut.object-storage.oracle-cloud.default.namespace=${OCI_OS_NS}
+	```
 
-    ```properties
-    micronaut.config-client.enabled=true
-    ```
+## Task 2: Configure Environment Variables
 
-2. Confirm the following snippet in the _bootstrap-oraclecloud.properties_ file. This snippet configures the application to read secrets stored in OCI Vault when the application is running on an OCI Compute Instance.
+1. Open a new terminal in VS Code using the **Terminal > New Terminal** menu.
 
-    _oci/src/main/resources/bootstrap-oraclecloud.properties_
-
-    ```properties
-	oci.vault.config.enabled=true
-    ```
-
-3. In VS Code, open `bootstrap-oraclecloud.properties`. The application configuration uses two environment variables `COMPARTMENT_ID` and `VAULT_ID`.
-
-    _oci/src/main/resources/bootstrap-oraclecloud.properties_
-
-    ```properties
-	#b
-	oci.vault.vaults[0].compartment-ocid=${COMPARTMENT_ID}
-	#c
-	oci.vault.vaults[0].ocid=${VAULT_ID}
-    ```
-
-4. Navigate to the **Identity & Security >> Compartments** section in the Oracle Cloud Console, find your workshop compartment in the list, open it, in the **Compartment Information** section click **Copy** to copy the value of the Compartment OCID. This is the compartment when you created the secrets.
-
-5. Open a new terminal in VS Code using the **Terminal > New Terminal** menu.
-
-6. Set the environment variable `COMPARTMENT_ID` using the secrets' compartment OCID you copied.
+2. Set the environment variable `OCI_OS_NS`to store the tenancy namespace (retrieve your tenancy namespace using the Oracle Cloud Infrastructure CLI).
 
 	```
 	<copy>
-	export COMPARTMENT_ID=ocid1.compartment.oc1...
+	export OCI_OS_NS=$(oci os ns get | jq .data -r)
+	</copy>
+	```
+
+3. Confirm the value set by running the following command:
+
+	```
+	<copy>
+	echo $OCI_OS_NS
+	</copy>
+	```
+
+4. Set the environment variable `OCIR_USERNAME` to store your username in the format <tenancy_namespace>/<username>. You can reuse OCI_OS_NS and only edit the <username> part.
+
+	```
+	<copy>
+	export OCIR_USERNAME="$OCI_OS_NS/<username>"
+	</copy>
+	```
+
+5. Confirm the value set by running the following command:
+
+	```
+	<copy>
+	echo $OCIR_USERNAME
+	</copy>
+	```
+
+6. Set the environment variable `OCI_REGION` to store your cloud region identifier, for example, “us-phoenix-1”.
+
+	```
+	<copy>
+	export OCI_REGION="<region>"
 	</copy>
 	```
 
@@ -78,78 +94,128 @@ In this lab, you will:
 
 	```
 	<copy>
-	echo $COMPARTMENT_ID
+	echo $OCI_REGION
 	</copy>
 	```
 
-8. Navigate to the **Identity & Security >> Vault** section in the Oracle Cloud Console, find your recently created Vault, open it, in the **Vault Information** section click **Copy** to copy the value of the Vault OCID.
-
-9. In the same terminal in VS Code, set the environment variable `VAULT_ID` using the Vault OCID you copied.
+8. Set the environment variable `OCI_CLUSTER_ID` to store your OKE cluster ID.
 
 	```
 	<copy>
-	export VAULT_ID=ocid1.vault.oc1...
+	export OCI_CLUSTER_ID="<your-cluster-id>"
 	</copy>
 	```
 
-10. Confirm the value set by running the following command:
+9. Confirm the value set by running the following command:
 
 	```
 	<copy>
-	echo $VAULT_ID
+	echo $OCI_CLUSTER_ID
 	</copy>
 	```
 
-11. The application uses externalized configuration (`ADB_WALLET_PASSWORD`, `ADB_USER`, and `ADB_USER_PASSWORD`) to establish a database connection. Here, the application will automatically connect to the Vault using the `VAULT_ID`, and retrieve the values of the secrets `ADB_WALLET_PASSWORD`, `ADB_USER`, and `ADB_USER_PASSWORD` in the compartment `COMPARTMENT_ID` from the Vault. Micronaut will automatically generate and download the Wallet using the OCI ADB API, and configure the data source using the retrieved secrets.
+10. Set the environment variable `OCI_OS_OKE_IMAGE` used in in the <pom.xml>, in the docker push command, and to substitute the placeholder used in the <k8s.yml> file.
+	```
+	<copy>
+	export OCI_OS_OKE_IMAGE=$OCI_REGION.ocir.io/$OCI_OS_NS/gdk-oke/os-oke:latest
+	</copy>
+	```
 
-    _oci/src/main/resources/application-oraclecloud.properties_
+11. Confirm the value set by running the following command:
 
-    ```properties
-    # <2>
-    datasources.default.walletPassword=${ADB_WALLET_PASSWORD}
-    # <3>
-    datasources.default.username=${ADB_USER}
-    # <4>
-    datasources.default.password=${ADB_USER_PASSWORD}
-    ```
+	```
+	<copy>
+	echo $OCI_OS_OKE_IMAGE
+	</copy>
+	```
 
-## Task 3: Configure the Application to connect to the OCI Autonomous Database instance
+12. Set the environment variable `K8S_NAMESPACE` to store your namespace.
+	```
+	<copy>
+	export K8S_NAMESPACE=gdk-k8s
+	</copy>
+	```
 
-Add the Autonomous Database instance ID to the application configuration.
+13. Confirm the value set by running the following command:
 
-1. From the **Autonomous Database details** screen in the Oracle Cloud Console, click **Copy** to copy the value of the database OCID.
+	```
+	<copy>
+	echo $K8S_NAMESPACE
+	</copy>
+	```
 
-   ![ADB Copy OCID](./images/adb-copy-ocid.jpg#input)
+14. Set the environment variable `OCI_OS_BUCKET_NAME` to store the bucket name you created.
 
-2. In VS Code, go to `datasources.default.ocid` in _application-oraclecloud.properties_ and replace the copied OCID value.
+	```
+	<copy>
+	export OCI_OS_BUCKET_NAME=<your bucket name>
+	</copy>
 
-	_oci/src/main/resources/application-oraclecloud.properties_
+15. Confirm the value set by running the following command:
 
-    ``` properties
-    # <1>
-	datasources.default.ocid=ocid1.autonomousdatabase.oc1.phx.any...q7a
-    ```
+	```
+	<copy>
+	echo $OCI_OS_BUCKET_NAME
+	</copy>
 
-3. Save (`CTRL+S`) the file.
+16. Set the environment variable `OCI_CLI_AUTH` to run kubectl commands from an OCI instance
 
-## Task 4: <if type="desktop">Use</if><if type="tenancy">Configure</if> OCI Instance Principal Authentication
+	```
+	<copy>
+	export OCI_CLI_AUTH=instance_principal
+	</copy>
 
-1. In VS Code, open `bootstrap-oraclecloud.properties`. The application is configured to use `OCI Instance Principal Authentication` when it is running on an OCI Compute Instance.
+17. Confirm the value set by running the following command:
+
+	```
+	<copy>
+	echo $OCI_CLI_AUTH
+	</copy>
+
+
+## Task3 3: Configure the Application to connect to the Oracle Cloud Infrastructure Registry
+
+1. 1. From the Oracle Cloud Console, click the **Profile** icon on the top right. Then click on **Account email**.
+
+	![Profile icon](images/profile-icon.jpg#input)
+
+2. From the **Profile details** screen, click **Auth tokens** under **Resources**. Click **Generate token**.
+
+	![Generate token Button](images/generate-token.png)
+
+3.  Enter a description.
+
+4. Copy the generated token value.
+	![Generated token Value](images/generated-token-value.png)
+
+5. In the same terminal in VS Code, set the environment variable `AUTH_TOKEN` to authenticate to OCI Registry (also known as Container Registry).
+
+	Oracle Cloud Infrastructure restricts you to two authentication tokens at the same time. If you already have two tokens, use an existing one or delete one that you are not using.
+
+	```
+	<copy>
+	export AUTH_TOKEN='copied value'
+	</copy>
+	```
+
+6. Confirm the value set by running the following command:
+
+	```
+	<copy>
+	echo $AUTH_TOKEN
+	</copy>
+
+## Task 4: Configure OCI OKE Workload Identity Authentication
+
+1. In VS Code, open `bootstrap-oraclecloud.properties`. The application is configured to use `OCI OKE Workload Identity Authentication` when it is running on an OCI Compute Instance.
 
 	_oci/src/main/resources/bootstrap-oraclecloud.properties_
 
 	```properties
-	oci.config.instance-principal.enabled=true
+	oci.config.oke-workload-identity.enabled=true
 	```
 
-<if type="desktop">
-2. The workshop environment includes a preconfigured `Instance Principal` using a `Dynamic Group` and a `Policy` in OCI to allow the application to read secrets stored in OCI Vault.
-</if>
-
-<if type="tenancy">
-2. The following steps show you how to set up an `Instance Principal` using a `Dynamic Group`-less `Policy` in OCI to allow the application to to read secrets stored in OCI Vault.
-
-3. From the Oracle Cloud Console navigation menu, go to **Identity & Security >> Identity >> Policies**.
+2. From the Oracle Cloud Console navigation menu, go to **Identity & Security >> Identity >> Policies**.
 
 	![Policies Menu](https://oracle-livelabs.github.io/common/images/console/id-policies.png)
 
@@ -163,24 +229,21 @@ Add the Autonomous Database instance ID to the application configuration.
 
 8. In the **Policy Builder** section, click **Show manual editor**.
 
-9. Enter the following policy statements in the text area. Replace the placeholders `WORKSHOP_COMPARTMENT_NAME` with your workshop compartment name, and `WORKSHOP_COMPARTMENT_OCID` with your workshop compartment OCID.
+9. Enter the following policy statements in the text area. Replace the placeholders `WORKSHOP_COMPARTMENT_NAME` with your workshop compartment name, and `K8S_NAMESPACE` with the K8S_NAMESPACE environment variable value .
 
 	```text
 	<copy>
-	Allow any-user to read secret-family in compartment WORKSHOP_COMPARTMENT_NAME where ALL {request.principal.type='instance', request.principal.compartment.id='WORKSHOP_COMPARTMENT_OCID'}
-	Allow any-user to read autonomous-databases in compartment WORKSHOP_COMPARTMENT_NAME where ALL {request.principal.type='instance', request.principal.compartment.id='WORKSHOP_COMPARTMENT_OCID'}
+	Allow any-user to manage objects in compartment WORKSHOP_COMPARTMENT_NAME where all {request.principal.type='workload', request.principal.namespace ='K8S_NAMESPACE', request.principal.service_account = 'gdk-service-acct', request.principal.cluster_id = 'your cluster ID'}
 	</copy>
 	```
 
-	To learn more about access control policies for the Vault, see [Policy Reference - Details for Vault](https://docs.oracle.com/en-us/iaas/Content/Identity/Reference/keypolicyreference.htm).
-
-	To learn more about access control policies for the Autonomous Database, see [IAM Policies for Autonomous Database](https://docs.oracle.com/en-us/iaas/autonomous-database-serverless/doc/autonomous-database-iam-policies.html).
+	To learn more about workloads access to OCI Resources, see [Granting Workloads Access to OCI Resources](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contenggrantingworkloadaccesstoresources.htm).
 
 </if>
 
 	To learn more about the supported authentication options, see [Micronaut Oracle Cloud Authentication](https://micronaut-projects.github.io/micronaut-oracle-cloud/snapshot/guide/#authentication).
 
-Congratulations! In this lab, you configured the application to connect to the OCI Autonomous Database instance using credentials stored as secrets in the OCI Vault.
+Congratulations! In this lab, you configured the application to deploy a Java Microservice to the OCI Kubernetes Cluster(OKE).
 
 You may now **proceed to the next lab**.
 

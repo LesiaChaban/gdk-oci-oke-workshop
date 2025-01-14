@@ -1,8 +1,8 @@
-# Build and run a native executable
+# Build a native executable container image for the application and push it to OCIR
 
 ## Introduction
 
-This lab describes how to generate and run a native executable for the application, and use it to connect to the OCI Autonomous Database instance.
+This lab describes how to generate a native executable container image for the application and push it to the OCI Registry.
 
 You will use [GraalVM Native Image](https://docs.oracle.com/en/graalvm/jdk/17/docs/overview/)’s ahead-of-time compilation to build a native executable for the application.
 
@@ -16,14 +16,12 @@ Estimated Lab Time: 15 minutes
 
 In this lab, you will:
 
-* Build and run a native executable for the application
-* Send an HTTP POST request to add a Genre
-* Send an HTTP GET request to fetch all the Genres from the database
-* Stop the application
+* Build a native executable for the application
+* Push the microservice container image to the OCI Registry
 
-## Task 1: Build and run a native executable for the application
+## Task 1: Build a native executable for the application
 
-1. In the first terminal in VS Code, check the version of the GraalVM native-image utility:
+1. In the same terminal in VS Code, check the version of the GraalVM native-image utility:
 
 	``` bash
 	<copy>
@@ -35,47 +33,31 @@ In this lab, you will:
 
 	``` bash
 	<copy>
-	./mvnw install -pl lib -am && MICRONAUT_ENVIRONMENTS=oraclecloud ./mvnw clean package -pl oci -Dpackaging=native-image
+	./mvnw clean package -Dpackaging=docker-native -Pgraalvm
 	</copy>
 	```
 
    It can take approximately 7-8 minutes to generate the native executable.
 
-3. The native executable is created in the _oci/target_ directory and can be run with the following command:
+## Task 2: Push the microservice container image to the OCI Registry
+
+1. From the same terminal in VS Code run `docker login` to log in Container Registry.
 
 	``` bash
 	<copy>
-	MICRONAUT_ENVIRONMENTS=oraclecloud oci/target/oci-adb-demo-oci
+	docker login $OCI_REGION.ocir.io -u $OCIR_USERNAME -p $AUTH_TOKEN
 	</copy>
 	```
 
-   The native executable starts instantaneously.
-
-## Task 2: Send an HTTP POST request to add a Genre
-
-1. From the second terminal in VS Code, add a genre using the command below.
+2. Push the microservice container image to the remote repository.
 
 	``` bash
 	<copy>
-	curl -X "POST" "http://localhost:8080/genres" -H 'Content-Type: application/json; charset=utf-8' -d '{ "name": "action" }' | jq
+	docker push $OCI_OS_OKE_IMAGE
 	</copy>
 	```
 
-## Task 3: Send an HTTP GET request to fetch all Genres from the database
-
-1. From the same terminal in VS Code, check the `genres` present in the database using the `/list` endpoint exposed by the application:
-
-	``` bash
-	<copy>
-	curl localhost:8080/genres/list | jq
-	</copy>
-	```
-
-## Task 4: Stop the application
-
-1. In the first terminal in VS Code, use `CTRL+C` to stop the application.
-
-Congratulations! You've successfully completed this lab. Your Java application native executable is now using the OCI Autonomous Database instance as its backend, with secrets in OCI Vault.
+Congratulations! You've successfully completed this lab. Your microservice container image is now located in the Oracle Container Registry.
 
 You may now **proceed to the next lab**.
 

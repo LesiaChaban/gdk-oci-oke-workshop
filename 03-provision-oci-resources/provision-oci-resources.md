@@ -1,8 +1,8 @@
-# Provision an OCI Autonomous Database
+# Provision an OKE Cluster, Container Repository and Object Storage bucket
 
 ## Introduction
 
-This lab describes the steps to create a new OCI Kubernetes Cluster(OKE), Container Registry and an Object Storage Bucket.
+This lab describes the steps to create a new OCI Kubernetes Cluster(OKE), Container Repository and Object Storage bucket.
 
 Estimated Lab Time: 10 minutes
 
@@ -10,11 +10,11 @@ Estimated Lab Time: 10 minutes
 
 In this lab, you will:
 
-* Create a Kubernetes Cluster(OKE)
-* Create a Container Registry
-* Create an Object Storage Bucket
+* Provision an OKE Cluster
+* Provision a Container Repository
+* Provision an Object Storage bucket
 
-## Task 1: Create a Kubernetes Cluster(OKE)
+## Task 1: Provision an OKE Cluster
 
 1. From the Oracle Cloud Console, open the navigation menu, click **Developer Services >> Containers & Artifacts** and then click **Kubernetes Clusters (OKE)**.
 
@@ -32,7 +32,17 @@ In this lab, you will:
 
     ![Create cluster Info](images/create-cluster-info.png#input)
 
-## Task 2: Create a Container Registry
+5. Enter the name for your cluster, for example, `gdk-k8s`. Select `Public Endpoint` for the Kubernetes API endpoint; `Private Workers` for worker nodes; and select the default the shape. Click **Next**.
+
+    ![Add cluster Details](images/add-cluster-details.png)
+
+6. Review the resources to be created. Click **Create cluster**
+
+    ![Create configured cluster Button](images/create-cluster-2.png)
+
+    It may take a few minutes to create all the resources. When they are all complete, click **Close**.
+
+## Task 2: Provision a Container Repository
 
 1. From the Oracle Cloud Console, open the navigation menu, click **Developer Services >> Containers & Artifacts** and then click **Container Registry**.
 
@@ -46,11 +56,11 @@ In this lab, you will:
 
     ![Create repository Button](images/create-repository.png#input)
 
-4. You will see the **Create repository** screen with default values. Check the **Compartment Name**, select "Private" in  the **Access**, paste "gdk-oke" to the **Repository Name** field, click **Create**.
+4. You will see the **Create repository** screen with default values. Check the **Compartment Name**, select "Private" in  the **Access**, paste "gdk-oke/os-oke" to the **Repository Name** field, click **Create**.
 
     ![Create repository Info](images/create-repository-info.png#input)
 
-## Task 3: Create an Object Storage Bucket
+## Task 3: Provision an Object Storage Bucket
 
 1. From the Oracle Cloud Console, open the navigation menu, click **Storage**. Under **Object Storage & Archive Storage**, click **Buckets**.
 
@@ -74,9 +84,7 @@ In this lab, you will:
 
    ![Bucket details and Objects list](images/objects-list.jpg)
 
-6. Note down the bucket name. You will need it in the next lab.
-
-Congratulations! In this lab, you created a new OCI Kubernetes Cluster(OKE), Container Registry and an Object Storage Bucket in your workshop compartment.
+Congratulations! In this lab, you created a new OCI Kubernetes Cluster(OKE), Container Repository and Object Storage bucket in your workshop compartment.
 
 You may now **proceed to the next lab**.
 

@@ -2,9 +2,8 @@
 
 ## About this Workshop
 
+This workshop takes you step by step through the process of deploying a Java Microservice to Oracle Cloud Infrastructure Container Engine for Kubernetes (OKE) using the Graal Development Kit for Micronaut (GDK).
 
-This workshop takes you step by step through the process of deploying a Java application to OCI Kubernetes Clusters (OKE) and upload, download, and delete files from Oracle Cloud Infrastructure (OCI) Object Storage using the Graal Development Kit for Micronaut (GDK).
-Kubernetes Clusters (OKE) service.
 You'll use GraalVM Native Image to package and run the application as a native executable.
 
 It is aimed at application developers and DevOps engineers with an intermediate knowledge of Java.
@@ -34,13 +33,12 @@ The GDK modules are designed for ahead-of-time compilation with GraalVM Native I
 In this workshop, you will:
 
 * Use Visual Studio Code (VS Code) from a remote desktop running in an OCI Compute Instance
-* Provision a new OCI Kubernetes Cluster
-* Provision a new OCI Object Storage bucket and Container Repository
-* Review the application source code developed with the Graal Development Kit for Micronaut
+* Provision an OKE Cluster, Container Repository and Object Storage bucket
+* Review the sample application source code
 * Configure the application
-* Build a native executable for the application using GraalVM Native Image and push the application to a Container Repository
-* Deploy the application to OCI OKE
-* Test the application with the OCI Object Storage bucket
+* Build a native executable container image for the application and push it to OCIR
+* Deploy the application to OKE
+* Test the application
 
 ### Prerequisites
 

@@ -4,9 +4,6 @@
 
 This lab reviews the sample Micronaut application code used in the workshop. The application source code and build scripts are available for review in VS Code.
 
-The sample `Genre` application is a part of a larger `Books` demo application. However, the main goal of this lab is to demonstrate connectivity to an OCI Autonomous DB (ADB) using the GDK. Hence, the scope of the application is limited to just a single entity called `Genre` with just two columns (an ID and a name).
-
-The application is a simple "RESTful" microservice that exposes CRUD-like operations as APIs to list, get, put, and delete the `Genre` entity. The entity is mapped to an ADB database table using the Micronaut Data JDBC feature.
 
 Estimated Time: 10 minutes
 

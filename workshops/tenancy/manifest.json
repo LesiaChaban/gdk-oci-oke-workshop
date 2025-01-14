@@ -1,5 +1,5 @@
 {
-  "workshoptitle": "Build a Java application with the Graal Development Kit for Micronaut (GDK), Oracle Cloud Infrastructure Autonomous Database and Secrets in Vault",
+  "workshoptitle": "Deploy a Java Microservice to Oracle Cloud Infrastructure Container Engine for Kubernetes (OKE) using the Graal Development Kit for Micronaut (GDK)",
   "variables": ["../../variables/variables.json"],
   "help": "livelabs-help-oci_us@oracle.com",
   "tutorials": [
@@ -33,48 +33,41 @@
       "filename": "../../02-git-clone/git-clone.md"
     },
     {
-      "title": "Lab 2: Provision an OCI Autonomous Database instance",
-      "filename": "../../03-provision-adb/provision-adb.md"
+      "title": "Lab 2: Provision an OKE Cluster, Container Repository and Object Storage bucket",
+      "filename": "../../03-provision-oci-resources/provision-oci-resources.md"
     },
     {
-      "title": "Lab 3: Provision an OCI Vault",
-      "filename": "../../04-provision-vault/provision-vault.md"
+      "title": "Lab 3: Review the Application Source Code",
+      "filename": "../../04-review-code/review-code.md"
     },
     {
-      "title": "Lab 4: Review the Application Source Code",
-      "filename": "../../05-review-code/review-code.md"
-    },
-    {
-      "title": "Lab 5: Configure the Autonomous Database instance and the Vault",
-      "filename": "../../06-configure-adb-and-vault/configure-adb-and-vault.md",
+      "title": "Lab 4: Configure the Application",
+      "filename": "../../05-configure-app/configure-app.md",
       "type": "tenancy"
     },
     {
-      "title": "Lab 6: Configure the application to use the Autonomous Database instance and the Vault",
-      "filename": "../../07-configure-app/configure-app.md",
+      "title": "Lab 5: Build and Run a Native Executable",
+      "filename": "../../06-build-run-native/build-run-native.md",
       "type": "tenancy"
     },
     {
-      "title": "Lab 7: Build and Run the Application",
-      "filename": "../../08-build-run-app/build-run-app.md",
-      "type" : {
-        "mn_run" : "mn:run",
-        "jar" : "JAR"
-      }
-    },
-    {
-      "title": "Lab 8: Build and Run a Native Executable",
-      "filename": "../../09-build-run-native/build-run-native.md",
+      "title": "Lab 6: Deploy the application to OKE",
+      "filename": "../../07-deploy-to-oke/deploy-to-oke.md",
       "type": "tenancy"
     },
     {
-      "title": "Lab 9: Cleanup",
-      "filename": "../../10-cleanup/cleanup.md",
+      "title": "Lab 7: Test the application",
+      "filename": "../../08-test-app/test-app.md",
+      "type": "tenancy"
+    },
+    {
+      "title": "Lab 8: Cleanup",
+      "filename": "../../09-cleanup/cleanup.md",
       "type": "tenancy"
     },
     {
       "title": "Conclusion",
-      "filename": "../../11-conclusion/conclusion.md"
+      "filename": "../../10-conclusion/conclusion.md"
     },
     {
       "title": "Need Help?",
