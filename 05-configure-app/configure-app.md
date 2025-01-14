@@ -15,24 +15,7 @@ In this lab, you will:
 * Confirm the Application dependencies
 * Configure Environment Variables
 * Configure the Application to connect to the Oracle Cloud Infrastructure Registry
-* Configure OCI Instance Principal Authentication
-
-
-export OCI_CLUSTER_ID="ocid1.cluster.oc1.iad.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-export OCI_COMPARTMENT_ID="ocid1.compartment.oc1..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-Copy
-The export command syntax varies per platform. Expand to learn more.
-3.2. Authenticate to Oracle Cloud Infrastructure Registry 
-Create an AUTH_TOKEN to authenticate to Oracle Cloud Infrastructure Registry (also known as Container Registry). (Oracle Cloud Infrastructure restricts you to two authentication tokens at the same time. If you already have two tokens, use an existing one or delete one that you are not using.)
-
-Export the AUTH_TOKEN variable:
- export AUTH_TOKEN=$(oci iam auth-token create --user-id $OCI_USER_ID --description gdk-k8s-token | jq -r '.data.token')
-Copy
-Run the next command to log in to ocir.io (Container Registry):
- docker login $OCI_REGION.ocir.io -u $OCIR_USERNAME -p $AUTH_TOKEN
-Copy
-The command should complete by printing “Login Succeeded”. (It may take some time before your authentication token activates.)
-
+* Configure OCI OKE Workload Identity Authentication
 
 ## Task 1: Confirm the Application properties
 
@@ -173,7 +156,7 @@ The command should complete by printing “Login Succeeded”. (It may take some
 	</copy>
 
 
-## Task3 3: Configure the Application to connect to the Oracle Cloud Infrastructure Registry
+## Task 3: Configure the Application to connect to the Oracle Cloud Infrastructure Registry
 
 1. 1. From the Oracle Cloud Console, click the **Profile** icon on the top right. Then click on **Account email**.
 
