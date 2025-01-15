@@ -10,31 +10,57 @@ Estimated Workshop Time: 05 minutes
 
 In this lab, you will:
 
-* Delete the ADB instance
-* Delete the three Secrets
-* Delete the Master Encryption Key
-* Delete the Vault
+* Delete the Kubernetes namespace
+* Delete the image from the private OCIR repo
+* Delete the private OCIR repo
+* Delete OKE cluster
+* Delete Object Storage bucket
 * Destroy Stack
 * Delete the Stack
-* Delete the Instance Principals Policy
+* Delete the OKE Workload Identity policy
+* (Optional) Purge local docker resources
 
 ## Task 1: Cleanup
 
 From the Oracle Cloud Console, clean up the resources provisioned for this workshop:
 
-1. From **Oracle Database** >> **Autonomous Database**, click **Terminate** to delete the ADB instance.
+1. From the same terminal in VS Code, run the command to delete the Kubernetes namespace.
 
-2. From **Identity & Security** >> **Key Management & Secret Management** >> **Vault** >> **Secrets**, use **Delete Secret** to delete all three secrets.
+    ```bash
+    <copy>
+    kubectl delete ns $K8S_NAMESPACE
+    </copy>
+    ```
 
-3. From **Identity & Security** >> **Key Management & Secret Management** >> **Vault** >> **Master Encryption Keys**, use **Delete Key** to delete the master encryption key.
+2. From **Developer Services** >> **Container Registry** >> search for your repo >> **images**, use **Delete Image** to delete image in OCIR repository.
 
-4. From **Identity & Security** >> **Key Management & Secret Management** >> **Vault**, use **Delete Vault** to delete the vault.
+3. From **Developer Services** >> **Container Registry** >> search for your repo >> use **Delete repository** to delete the OCIR repository.
 
-5. From **Resource Manager >> Stacks >> Stack Details** screen, run **Destroy** to delete the VCN and the Compute instance.
+4. From **Developer Services** >> **Kubernetes Clusters (OKE)** >> navigate to your cluster details section >> use **Delete** to delate it.
 
-6. From **Resource Manager >> Stacks >> Stack Details** screen, **Delete** the stack.
+5. From **Storage >> Object Storage & Archive Storage >> Buckets**, delete the **Bucket**.
 
-7. From **Identity & Security >> Identity >> Policies**, delete the Instance Principals policy.
+6. From **Resource Manager >> Stacks >> Stack Details** screen, run **Destroy** to delete the VCN and the Compute instance.
+
+7. From **Resource Manager >> Stacks >> Stack Details** screen, **Delete** the stack.
+
+8. From **Identity & Security >> Identity >> Policies**, delete the Workload Identity policy.
+
+9. (Optional) From the same terminal in VS Code, run the command to purge all local docker resources (images, containers, volumes, etc.)
+
+   ```bash
+    <copy>
+    docker system prune -a
+    </copy>
+    ```
+
+    Check it:
+
+    ```bash
+    <copy>
+    docker system df
+    </copy>
+    ```
 
 Congratulations! You've successfully completed this lab.
 

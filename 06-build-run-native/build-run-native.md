@@ -57,7 +57,7 @@ In this lab, you will:
 	</copy>
 	```
 
-Congratulations! You've successfully completed this lab. Your microservice container image is now located in the Oracle Container Registry.
+Congratulations! You've successfully completed this lab. Your microservice container image is now located under the Oracle Container Registry.
 
 You may now **proceed to the next lab**.
 

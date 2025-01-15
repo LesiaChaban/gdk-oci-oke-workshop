@@ -4,7 +4,6 @@
 
 This lab reviews the sample Micronaut application code used in the workshop. The application source code and build scripts are available for review in VS Code.
 
-
 Estimated Time: 10 minutes
 
 ### Objectives
@@ -13,192 +12,194 @@ In this lab, you will:
 
 * Review the sample application source code
 
-## Task 1: Review the Data Source Configuration
+## Task 1: Review the Application Configuration
 
-_oci/src/main/resources/application-oraclecloud.properties_
+The build file contains the following properties:
 
-```
-datasources.default.dialect=ORACLE
-# <1>
-datasources.default.ocid=ocid1.autonomousdatabase.oc1.phx.any...q7a
-# <2>
-datasources.default.walletPassword=${ADB_WALLET_PASSWORD}
-# <3>
-datasources.default.username=${ADB_USER}
-# <4>
-datasources.default.password=${ADB_USER_PASSWORD}
-```
-
-1. The Autonomous Database instance OCID.
-
-2. A password to encrypt the keys inside the ADB Wallet (must be at least eight characters long and must include at least one letter and either one numeric character or one special character). This sample uses an externalized configuration value from the OCI Vault.
-
-3. The database user's name. This sample uses an externalized configuration value from the OCI Vault.
-
-4. The database user's password. This sample uses an externalized configuration value from the OCI Vault.
-
-## Task 2: Review the Database Migration with Flyway
-
-[Flyway](https://flywaydb.org/documentation/) automates schema changes, significantly simplifying schema management tasks, such as migrating, rolling back, and reproducing in multiple environments.
-
-The application uses [Micronaut integration with Flyway](https://micronaut-projects.github.io/micronaut-flyway/latest/guide/) to create a database schema on the fly by:
-
-1. Including the following dependency:
-
-	_oci/pom.xml_
+_oci/pom.xml_
 
 	```properties
-	<dependency>
-		<groupId>io.micronaut.flyway</groupId>
-		<artifactId>micronaut-flyway</artifactId>
-		<scope>compile</scope>
-	</dependency>
+	<properties>
+        ...
+        <exec.mainClass>com.example.Application</exec.mainClass>
+        <!-- Runtime base container image to package the native executable -->
+        <micronaut.native-image.base-image-run>frolvlad/alpine-glibc:alpine-3.16</micronaut.native-image.base-image-run>
+        <!-- Using the latest GFTC Oracle GraalVM for JDK 17 Native Image container image to build the native executable -->
+        <jib.from.image>container-registry.oracle.com/graalvm/native-image:17-ol8</jib.from.image>
+        <!-- Using the OCIR Repo to push the generated runtime image containing the native executable -->
+        <jib.to.image>${env.OCI_OS_OKE_IMAGE}</jib.to.image>
+    </properties>
 	```
 
-2. Enabling Flyway in the _application-oraclecloud.properties_ file for the `default` datasource:
+The build file enable `jib-maven-plugin` for the application:
 
-	_oci/src/main/resources/application-oraclecloud.properties_
+_oci/pom.xml_
 
 	```properties
-	flyway.datasources.default.enabled=true
+	<build>
+    <plugins>
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <configuration>
+          <to>
+            <!-- <image>${project.name}</image> -->
+            <image>${jib.to.image}</image>
+          </to>
+          <from>
+            <image>${jib.from.image}</image>
+          </from>
+        </configuration>
+      </plugin>
 	```
 
-	Flyway migration is automatically triggered before the application starts. Flyway will read migration commands in the _resources/db/migration/_ directory, run them if necessary, and verify that the configured data source is consistent with them.
+## Task 2: Review the Application Dependencies
 
-3. Creating an SQL file to create a `GENRE` table in the database:
+The build files contains the following dependency to enable OCI OKE Workload Identity Authentication.
 
-	_lib/src/main/resources/db/migration/V1\_\_schema.sql_
+_oci/pom.xml_
 
-    ``` sql
-    CREATE TABLE "GENRE" (
-        "ID"    NUMBER(19) PRIMARY KEY NOT NULL,
-        "NAME"  VARCHAR(255) NOT NULL
-    );
-    CREATE SEQUENCE "GENRE_SEQ" MINVALUE 1 START WITH 1 NOCACHE NOCYCLE;
-    ```
+    <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-oke-workload-identity</artifactId>
+    </dependency>
 
-   During application startup, Flyway runs the commands in this SQL file and creates the schema needed for the application.
+_lib/pom.xml_
 
-## Task 3: Review the Domain Entity
+    <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-oke-workload-identity</artifactId>
+    </dependency>
 
-In this example, the domain entity is a simple `Genre` object that maps to the `GENRE` table. It has an auto-generated `id` and a unique `name`.
+## Task 3: Review the auth.yml configuration
 
-_lib/src/main/java/com/example/domain/Genre.java_
 
-``` java
-@MappedEntity // <1>
-public class Genre {
+
+_auth.yml_
+
+```
+ apiVersion: v1
+kind: Namespace # <1>
+metadata:
+  name: ${K8S_NAMESPACE}
+---
+apiVersion: v1
+kind: ServiceAccount # <2>
+metadata:
+  namespace: ${K8S_NAMESPACE}
+  name: gdk-service-acct
+---
+kind: Role # <3>
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: ${K8S_NAMESPACE}
+  name: gdk_service_role
+rules:
+  - apiGroups: [""]
+    resources: ["services", "endpoints", "configmaps", "secrets", "pods"]
+    verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding # <4>
+metadata:
+  namespace: ${K8S_NAMESPACE}
+  name: gcn_service_role_bind
+subjects:
+  - kind: ServiceAccount
+    name: gcn-service-acct
+roleRef:
+  kind: Role
+  name: gcn_service_role
+  apiGroup: rbac.authorization.k8s.io
 ```
 
-1. `@MappedEntity` specifies that the entity is mapped to the database. If your table name differs from the entity name, pass the table name as the value. For example: `@MappedEntity(value = "TABLE_NAME")`. In the case of this application, the table name `GENRE` matches the entity name `Genre`.
+1. `K8S_NAMESPACE` placeholder for a `Namespace` that will be populated by Kubernetes
 
-## Task 4: Review the Repository Access
+2. Create a service account named `gdk-service-acct`
 
-The repository interface `GenreRepository` defines the operations to access the database. Micronaut Data implements the interface at compilation time:
+3. Create a role named `gdk_service_role`
 
-_lib/src/main/java/com/example/repository/GenreRepository.java_
+4. Bind the `gdk_service_role` role to the `gdk-service-acct` service account.
 
-``` java
-@JdbcRepository(dialect = ORACLE) // <1>
-public interface GenreRepository extends PageableRepository<Genre, Long> { // <2>
+## Task 4: Review the k8s-oci.yml configuration
 
-	Genre save(@NonNull @NotBlank String name); // <3>
+_k8s-oci.yml_
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ${K8S_NAMESPACE} # <i>
+  name: "oci"
+spec:
+  selector:
+    matchLabels:
+      app: "oci"
+  template:
+    metadata:
+      labels:
+        app: "oci"
+    spec:
+      serviceAccountName: gdk-service-acct # <ii>
+      automountServiceAccountToken: true #<iiii>
+      containers:
+        - name: "oci"
+          image: ${OCI_OS_OKE_IMAGE} # <iii>
+          imagePullPolicy: Always # <iv>
+          env:
+          - name: OCI_OS_NS # <v>
+            value: ${OCI_OS_NS}
+          - name: OCI_OS_BUCKET_NAME # <v>
+            value: ${OCI_OS_BUCKET_NAME}
+          - name: MICRONAUT_ENVIRONMENTS # <vi>
+            value: "oraclecloud"
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health/readiness
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /health/liveness
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 10
+      imagePullSecrets: # <vii>
+        - name: ocirsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ${K8S_NAMESPACE} # <i>
+  name: "oci"
+  annotations: # <ii>
+    oci.oraclecloud.com/load-balancer-type: "lb"
+    service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+    service.beta.kubernetes.io/oci-load-balancer-shape-flex-min: "10"
+    service.beta.kubernetes.io/oci-load-balancer-shape-flex-max: "10"
+spec:
+  selector:
+    app: "oci"
+  type: LoadBalancer
+  ports:
+    - protocol: "TCP"
+      port: 8080
 ```
 
-1. `@JdbcRepository` with a specific dialect: `ORACLE` in this example.
+i. Add `metadata.namespace` to segregate user-defined resources and to simplify resource cleanup.
+ii. Add `spec.serviceAccountName` to associate the service account with the pod.
+iii. Update the `spec.containers[0].image` to point to your image in OCIR.
+iiii. Add `spec.automountServiceAccountToken` and set it to `true`
+iv. Add `spec.containers[0].imagePullPolicy`.
+v. Add `spec.containers[0].env` for the environment variables `OCI_OS_NS` and `OCI_OS_BUCKET_NAME`.
+vi.
+vii. Add `imagePullSecrets` for OKE to pull a private container image from OCIR.
 
-2. `Genre`, the entity to treat as the root entity for the purposes of querying, is established either from the method signature or from the generic type parameter specified to the `GenericRepository` interface. The repository extends from `PageableRepository`. It inherits the hierarchy `PageableRepository` → `CrudRepository` → `GenericRepository`.
-
-    - `PageableRepository`: A repository that supports pagination. It provides `findAll(Pageable)` and `findAll(Sort)`.
-    - `CrudRepository`: A repository interface for performing CRUD (Create, Read, Update, Delete). It provides methods such as `findAll()`, `save(Genre)`, `deleteById(Long)`, and `findById(Long)`.
-    - `GenericRepository`: A root interface that features no methods but defines the entity type and ID type as generic arguments.
-
-3. Micronaut validation is built on the standard framework – [JSR 380](https://jcp.org/en/jsr/detail?id=380), also known as Bean Validation 2.0. Micronaut [has built-in support for validation of beans](https://docs.micronaut.io/latest/guide/#beanValidation) that are annotated with `javax.validation` annotations. The necessary dependencies are included by default when creating a new application, so you don’t need to add anything else.
-
-## Task 5: Review the Controller
-
-The controller class `GenreController` exposes the `Genre` resource with REST APIs for the common CRUD operations.
-
-_lib/src/main/java/com/example/controller/GenreController.java_
-
-``` java
-@ExecuteOn(TaskExecutors.IO) // <1>
-@Controller("/genres") // <2>
-class GenreController {
-```
-
-1. It is critical that any blocking I/O operations (such as fetching data from a database) are offloaded to a separate thread pool that does not block the Event loop.
-
-2. The class is defined as a controller with the [@Controller](https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Controller.html) annotation mapped to the path `/genres`.
-
-``` java
-private final GenreService genreService;
-
-GenreController(GenreService genreService) { // <3>
-    this.genreService = genreService;
-}
-```
-
-3. Use constructor injection to inject a bean of type `GenreService`.
-
-``` java
-@Get("/{id}") // <4>
-public Optional<Genre> show(Long id) {
-    return genreService.findById(id); // <5>
-}
-```
-
-4. Maps a `GET` request to `/genres/{id}`, which attempts to show a genre. This illustrates the use of a URL path variable `id`.
-
-5. Returning an empty optional when the genre doesn’t exist makes the Micronaut framework respond with 404 (not found).
-
-``` java
-@Put("/{id}/{name}") // <6>
-public HttpResponse<?> update(long id, String name) {
-    genreService.update(id, name);
-    return HttpResponse
-            .noContent()
-            .header(LOCATION, URI.create("/genres/" + id).getPath()); // <7>
-}
-```
-
-6. Maps a `PUT` request to `/genres/{id}/{name}`, which attempts to update the corresponding genre name. This illustrates the use of URL path variables `id` and `name`.
-
-7. It is easy to add custom headers to the response.
-
-``` java
-@Get("/list") // <8>
-public List<Genre> list(@Valid Pageable pageable) { // <9>
-    return genreService.list(pageable);
-}
-```
-
-8. Maps a `GET` request to `/genres/list`, which returns a list of genres.
-
-9. You can bind `Pageable` as a controller method argument. (For more information, see [Pageable configuration](https://micronaut-projects.github.io/micronaut-data/latest/guide/configurationreference.html#io.micronaut.data.runtime.config.DataConfiguration.PageableConfiguration).) For example, you can configure the default page size with the configuration property `micronaut.data.pageable.default-page-size`.
-
-``` java
-@Post // <10>
-public HttpResponse<Genre> save(@Body("name") @NotBlank String name) {
-    Genre genre = genreService.save(name);
-
-    return HttpResponse
-            .created(genre)
-            .headers(headers -> headers.location(URI.create("/genres/" + genre.getId())));
-}
-```
-
-10. Maps a `POST` request to `/genres`, which attempts to save a genre.
-
-``` java
-@Delete("/{id}") // <11>
-@Status(NO_CONTENT)
-public void delete(Long id) {
-    genreService.delete(id);
-}
-```
-
-11. Maps a `DELETE` request to `/genres/{id}`, which attempts to remove a genre. This illustrates the use of a URL path variable `id`.
 
 You may now **proceed to the next lab**.
 

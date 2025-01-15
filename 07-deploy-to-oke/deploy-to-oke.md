@@ -63,7 +63,7 @@ In this lab, you will:
 
 ## Task 2:  Deploy the application to OKE
 
-1. In the same terminal in VS Code, run the commend to create the Kubernetes namespace. Use placeholders that will be substituted using environment variables.
+1. In the same terminal in VS Code, run the command to create the Kubernetes namespace. Use placeholders that will be substituted using environment variables.
 
    ```bash
    <copy>
@@ -87,11 +87,11 @@ In this lab, you will:
 
    ```bash
    <code>
-   envsubst < k8s.yml | kubectl apply -f
+   envsubst < k8s-oci.yml | kubectl apply -f
    </code>
    ```
 
-4. Run the following command to check the status of the pods and make sure that all of them have the status “Running”:
+4. Run the following command to check the status of the pods and make sure that all of them have the status `Running`:
 
    ```bash
    <code>
@@ -107,7 +107,7 @@ In this lab, you will:
    users-df6f78cd7-lgnzx     1/1     Running   0          37s
    ```
 
-5.  Run this command to check the status of the microservices:
+5.  Run the command to check the status of the microservices:
 
    ```bash
    <code>
@@ -123,7 +123,7 @@ In this lab, you will:
    users        NodePort       10.96.34.174   <none>           8080:31528/TCP      2m33s
    ```
 
-   If the EXTERNAL-IP property of the api service has a <pending> status, wait a few seconds and then run the command again. If the <pending> status persists for more than one minute, try the following:
+   If the `EXTERNAL-IP` property of the api service has a <pending> status, wait a few seconds and then run the command again. If the <pending> status persists for more than one minute, try the following:
 
    1. Verify that a Load Balancer was created.
       a. In the Oracle Cloud Console, open the navigation menu.

@@ -133,6 +133,7 @@ In this lab, you will:
 	<copy>
 	export OCI_OS_BUCKET_NAME=<your bucket name>
 	</copy>
+	```
 
 15. Confirm the value set by running the following command:
 
@@ -140,6 +141,7 @@ In this lab, you will:
 	<copy>
 	echo $OCI_OS_BUCKET_NAME
 	</copy>
+	```
 
 16. Set the environment variable `OCI_CLI_AUTH` to run kubectl commands from an OCI instance
 
@@ -147,6 +149,7 @@ In this lab, you will:
 	<copy>
 	export OCI_CLI_AUTH=instance_principal
 	</copy>
+	```
 
 17. Confirm the value set by running the following command:
 
@@ -154,7 +157,7 @@ In this lab, you will:
 	<copy>
 	echo $OCI_CLI_AUTH
 	</copy>
-
+	```
 
 ## Task 3: Configure the Application to connect to the Oracle Cloud Infrastructure Registry
 
@@ -187,6 +190,7 @@ In this lab, you will:
 	<copy>
 	echo $AUTH_TOKEN
 	</copy>
+	```
 
 ## Task 4: Configure OCI OKE Workload Identity Authentication
 
@@ -221,8 +225,6 @@ In this lab, you will:
 	```
 
 	To learn more about workloads access to OCI Resources, see [Granting Workloads Access to OCI Resources](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contenggrantingworkloadaccesstoresources.htm).
-
-</if>
 
 	To learn more about the supported authentication options, see [Micronaut Oracle Cloud Authentication](https://micronaut-projects.github.io/micronaut-oracle-cloud/snapshot/guide/#authentication).
 
