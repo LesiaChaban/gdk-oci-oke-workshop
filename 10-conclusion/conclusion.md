@@ -9,8 +9,7 @@ Application developers can use the Graal Development Kit for Micronaut (GDK) to 
 ## Learn More
 
 - [Expert’s Guide to Deploy a Micronaut Microservices Application to Oracle Cloud Infrastructure Container Engine for Kubernetes](https://graal.cloud/gdk/gdk-modules/kubernetes/micronaut-k8s-oci-expert/?buildTool=gradle&lang=java)
-- [Deploy a Micronaut Microservices Application to a Local Kubernetes Cluster](https://graal.cloud/gdk/gdk-modules/kubernetes/micronaut-k8s/?buildTool=gradle&lang=java)
-- [GDK Kubernetes ( Oracle Cloud Infrastructure Container Engine for Kubernetes (OKE)) Module](https://graal.cloud/gdk/modules/#kubernetes)
+- [GDK Kubernetes (Oracle Cloud Infrastructure Container Engine for Kubernetes) Module](https://graal.cloud/gdk/modules/#kubernetes)
 - [Micronaut Kubernetes](https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/)
 - [GDK Object Storage](https://graal.cloud/gdk/modules/#object-storage)
 - [Micronaut Object Storage](https://micronaut-projects.github.io/micronaut-object-storage/latest/guide/)

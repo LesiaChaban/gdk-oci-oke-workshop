@@ -17,29 +17,31 @@ In this lab, you will:
 
 1. In the same terminal in VS Code, run the command to retrieve the URL of the microservice and set it as the value of the `IP` environment variable:
 
-   ```bash
-   <copy>
-   export IP=$(kubectl get svc oci -n=$K8S_NAMESPACE -o json | jq -r .status.loadBalancer.ingress[0].ip)
-   </copy>
-   ```
+	```bash
+	<copy>
+	export IP=$(kubectl get svc oci -n=$K8S_NAMESPACE -o json | jq -r .status.loadBalancer.ingress[0].ip)
+	</copy>
+	```
+
 
 2. Confirm the value set by running the following command:
 
-   ```bash
-   <copy>
-   echo $IP
-   </copy>
-   ```
+	```bash
+	<copy>
+	echo $IP
+	</copy>
+	```
 
 ## Task 2: Test the application
 
 1. In the same terminal in VS Code, send an HTTP POST request to the `/pictures/foo` endpoint to upload a _profile.jpg_ picture to the bucket:
 
-   ```bash
-   <copy>
-   curl -i -F "fileUpload=@profile.jpg" http://$IP:8080/pictures/foo
-   </copy>
-   ```
+	```bash
+	<copy>
+	curl -i -F "fileUpload=@profile.jpg" http://$IP:8080/pictures/foo
+	</copy>
+	```
+
 
 2. Check the bucket contents. Go to the **OCI Console** >> **Storage** >> **Object Storage & Archive Storage** >> **Buckets** >> **Bucket Details** screen opened in the browser.
 
@@ -49,7 +51,7 @@ In this lab, you will:
 
 3. From the same terminal in VS Code, send an HTTP GET request to the `pictures/foo` endpoint to download the picture from the bucket:
 
-	``` bash
+	```bash
 	<copy>
 	curl http://$IP:8080/pictures/foo -O -J
 	</copy>
@@ -57,11 +59,11 @@ In this lab, you will:
 
 4. You should see the profile picture _foo.jpg_ downloaded in the __ directory in VS Code. Click the picture to view it.
 
-   ![View Picture](./images/view-pic-foo.jpg)
+   ![View Picture](./images/view-pic-foo.jpg) !!!
 
 5.  From the same terminal in VS Code, send an HTTP DELETE request to the `/pictures/foo` endpoint to delete the picture from the bucket:
 
-	``` bash
+	```bash
 	<copy>
 	curl -X DELETE http://$IP:8080/pictures/foo
 	</copy>

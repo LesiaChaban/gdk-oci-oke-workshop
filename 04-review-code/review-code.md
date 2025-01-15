@@ -73,8 +73,6 @@ _lib/pom.xml_
 
 ## Task 3: Review the auth.yml configuration
 
-
-
 _auth.yml_
 
 ```
@@ -129,7 +127,7 @@ _k8s-oci.yml_
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: ${K8S_NAMESPACE} # <i>
+  namespace: ${K8S_NAMESPACE} # <1>
   name: "oci"
 spec:
   selector:
@@ -140,18 +138,18 @@ spec:
       labels:
         app: "oci"
     spec:
-      serviceAccountName: gdk-service-acct # <ii>
-      automountServiceAccountToken: true #<iiii>
+      serviceAccountName: gdk-service-acct # <2>
+      automountServiceAccountToken: true # <4>
       containers:
         - name: "oci"
-          image: ${OCI_OS_OKE_IMAGE} # <iii>
-          imagePullPolicy: Always # <iv>
+          image: ${OCI_OS_OKE_IMAGE} # <3>
+          imagePullPolicy: Always # <5>
           env:
-          - name: OCI_OS_NS # <v>
+          - name: OCI_OS_NS # <6>
             value: ${OCI_OS_NS}
-          - name: OCI_OS_BUCKET_NAME # <v>
+          - name: OCI_OS_BUCKET_NAME # <6>
             value: ${OCI_OS_BUCKET_NAME}
-          - name: MICRONAUT_ENVIRONMENTS # <vi>
+          - name: MICRONAUT_ENVIRONMENTS # <7>
             value: "oraclecloud"
           ports:
             - name: http
@@ -169,7 +167,7 @@ spec:
             initialDelaySeconds: 5
             timeoutSeconds: 3
             failureThreshold: 10
-      imagePullSecrets: # <vii>
+      imagePullSecrets: # <8>
         - name: ocirsecret
 ---
 apiVersion: v1
@@ -191,14 +189,14 @@ spec:
       port: 8080
 ```
 
-i. Add `metadata.namespace` to segregate user-defined resources and to simplify resource cleanup.
-ii. Add `spec.serviceAccountName` to associate the service account with the pod.
-iii. Update the `spec.containers[0].image` to point to your image in OCIR.
-iiii. Add `spec.automountServiceAccountToken` and set it to `true`
-iv. Add `spec.containers[0].imagePullPolicy`.
-v. Add `spec.containers[0].env` for the environment variables `OCI_OS_NS` and `OCI_OS_BUCKET_NAME`.
-vi.
-vii. Add `imagePullSecrets` for OKE to pull a private container image from OCIR.
+1. Add `metadata.namespace` to segregate user-defined resources and to simplify resource cleanup.
+2. Add `spec.serviceAccountName` to associate the service account with the pod.
+3. Update the `spec.containers[0].image` to point to your image in OCIR.
+4. Add `spec.automountServiceAccountToken` and set it to `true`
+5. Add `spec.containers[0].imagePullPolicy`.
+6. Add `spec.containers[0].env` for the environment variables `OCI_OS_NS` and `OCI_OS_BUCKET_NAME`.
+7.
+8. Add `imagePullSecrets` for OKE to pull a private container image from OCIR.
 
 
 You may now **proceed to the next lab**.

@@ -48,7 +48,7 @@ From the Oracle Cloud Console, clean up the resources provisioned for this works
 
 9. (Optional) From the same terminal in VS Code, run the command to purge all local docker resources (images, containers, volumes, etc.)
 
-   ```bash
+    ```bash
     <copy>
     docker system prune -a
     </copy>

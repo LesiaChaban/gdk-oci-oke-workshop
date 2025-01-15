@@ -33,9 +33,9 @@ In this lab, you will:
 
 1. Open a new terminal in VS Code using the **Terminal > New Terminal** menu.
 
-2. Set the environment variable `OCI_OS_NS`to store the tenancy namespace (retrieve your tenancy namespace using the Oracle Cloud Infrastructure CLI).
+2. Set the environment variable `OCI_OS_NS` to store the tenancy namespace (retrieve your tenancy namespace using the Oracle Cloud Infrastructure CLI).
 
-	```
+	```bash
 	<copy>
 	export OCI_OS_NS=$(oci os ns get | jq .data -r)
 	</copy>
@@ -43,15 +43,15 @@ In this lab, you will:
 
 3. Confirm the value set by running the following command:
 
-	```
+	```bash
 	<copy>
 	echo $OCI_OS_NS
 	</copy>
 	```
 
-4. Set the environment variable `OCIR_USERNAME` to store your username in the format <tenancy_namespace>/<username>. You can reuse OCI_OS_NS and only edit the <username> part.
+4. Set the environment variable `OCIR_USERNAME` to store your username in the format "tenancy_namespace/username". You can reuse `OCI_OS_NS` and only edit the "username" part.
 
-	```
+	```bash
 	<copy>
 	export OCIR_USERNAME="$OCI_OS_NS/<username>"
 	</copy>
@@ -59,7 +59,7 @@ In this lab, you will:
 
 5. Confirm the value set by running the following command:
 
-	```
+	```bash
 	<copy>
 	echo $OCIR_USERNAME
 	</copy>
@@ -67,7 +67,7 @@ In this lab, you will:
 
 6. Set the environment variable `OCI_REGION` to store your cloud region identifier, for example, “us-phoenix-1”.
 
-	```
+	```bash
 	<copy>
 	export OCI_REGION="<region>"
 	</copy>
@@ -75,7 +75,7 @@ In this lab, you will:
 
 7. Confirm the value set by running the following command:
 
-	```
+	```bash
 	<copy>
 	echo $OCI_REGION
 	</copy>
@@ -83,7 +83,7 @@ In this lab, you will:
 
 8. Set the environment variable `OCI_CLUSTER_ID` to store your OKE cluster ID.
 
-	```
+	```bash
 	<copy>
 	export OCI_CLUSTER_ID="<your-cluster-id>"
 	</copy>
@@ -91,14 +91,14 @@ In this lab, you will:
 
 9. Confirm the value set by running the following command:
 
-	```
+	```bash
 	<copy>
 	echo $OCI_CLUSTER_ID
 	</copy>
 	```
 
 10. Set the environment variable `OCI_OS_OKE_IMAGE` used in in the <pom.xml>, in the docker push command, and to substitute the placeholder used in the <k8s.yml> file.
-	```
+	```bash
 	<copy>
 	export OCI_OS_OKE_IMAGE=$OCI_REGION.ocir.io/$OCI_OS_NS/gdk-oke/os-oke:latest
 	</copy>
@@ -106,14 +106,14 @@ In this lab, you will:
 
 11. Confirm the value set by running the following command:
 
-	```
+	```bash
 	<copy>
 	echo $OCI_OS_OKE_IMAGE
 	</copy>
 	```
 
 12. Set the environment variable `K8S_NAMESPACE` to store your namespace.
-	```
+	```bash
 	<copy>
 	export K8S_NAMESPACE=gdk-k8s
 	</copy>
@@ -121,7 +121,7 @@ In this lab, you will:
 
 13. Confirm the value set by running the following command:
 
-	```
+	```bash
 	<copy>
 	echo $K8S_NAMESPACE
 	</copy>
@@ -129,7 +129,7 @@ In this lab, you will:
 
 14. Set the environment variable `OCI_OS_BUCKET_NAME` to store the bucket name you created.
 
-	```
+	```bash
 	<copy>
 	export OCI_OS_BUCKET_NAME=<your bucket name>
 	</copy>
@@ -137,7 +137,7 @@ In this lab, you will:
 
 15. Confirm the value set by running the following command:
 
-	```
+	```bash
 	<copy>
 	echo $OCI_OS_BUCKET_NAME
 	</copy>
@@ -145,7 +145,7 @@ In this lab, you will:
 
 16. Set the environment variable `OCI_CLI_AUTH` to run kubectl commands from an OCI instance
 
-	```
+	```bash
 	<copy>
 	export OCI_CLI_AUTH=instance_principal
 	</copy>
@@ -153,7 +153,7 @@ In this lab, you will:
 
 17. Confirm the value set by running the following command:
 
-	```
+	```bash
 	<copy>
 	echo $OCI_CLI_AUTH
 	</copy>
@@ -178,7 +178,7 @@ In this lab, you will:
 
 	Oracle Cloud Infrastructure restricts you to two authentication tokens at the same time. If you already have two tokens, use an existing one or delete one that you are not using.
 
-	```
+	```bash
 	<copy>
 	export AUTH_TOKEN='copied value'
 	</copy>
@@ -186,7 +186,7 @@ In this lab, you will:
 
 6. Confirm the value set by running the following command:
 
-	```
+	```bash
 	<copy>
 	echo $AUTH_TOKEN
 	</copy>

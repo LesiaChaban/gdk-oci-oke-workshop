@@ -36,7 +36,7 @@ In this lab, you will:
 
     ![Add cluster Details](images/add-cluster-details.png)
 
-6. Review the resources to be created. Click **Create cluster**
+6. Review the resources to be created. Click **Create cluster**.
 
     ![Create configured cluster Button](images/create-cluster-2.png)
 

@@ -51,7 +51,7 @@ In this lab, you will:
 
 2. Push the microservice container image to the remote repository.
 
-	``` bash
+	```bash
 	<copy>
 	docker push $OCI_OS_OKE_IMAGE
 	</copy>
