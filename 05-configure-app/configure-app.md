@@ -33,11 +33,11 @@ In this lab, you will:
 
 1. Open a new terminal in VS Code using the **Terminal > New Terminal** menu.
 
-2. Set the environment variable `OCI_OS_NS` to store the tenancy namespace (retrieve your tenancy namespace using the Oracle Cloud Infrastructure CLI).
+2. Set the environment variable `OCI_OS_NS` to store the tenancy namespace.
 
 	```bash
 	<copy>
-	export OCI_OS_NS=$(oci os ns get | jq .data -r)
+	export OCI_OS_NS='<your tenancy namespace>'
 	</copy>
 	```
 
@@ -143,7 +143,7 @@ In this lab, you will:
 	</copy>
 	```
 
-16. Set the environment variable `OCI_CLI_AUTH` to run kubectl commands from an OCI instance
+16. Set the environment variable `OCI_CLI_AUTH` to run kubectl commands from an OCI instance.
 
 	```bash
 	<copy>
@@ -216,7 +216,7 @@ In this lab, you will:
 
 8. In the **Policy Builder** section, click **Show manual editor**.
 
-9. Enter the following policy statements in the text area. Replace the placeholders `WORKSHOP_COMPARTMENT_NAME` with your workshop compartment name, and `K8S_NAMESPACE` with the K8S_NAMESPACE environment variable value .
+9. Enter the following policy statements in the text area. Replace the placeholders `WORKSHOP_COMPARTMENT_NAME` with your workshop compartment name, and `K8S_NAMESPACE` with the namespace value.
 
 	```text
 	<copy>

@@ -101,13 +101,13 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding # <4>
 metadata:
   namespace: ${K8S_NAMESPACE}
-  name: gcn_service_role_bind
+  name: gdk_service_role_bind
 subjects:
   - kind: ServiceAccount
-    name: gcn-service-acct
+    name: gdk-service-acct
 roleRef:
   kind: Role
-  name: gcn_service_role
+  name: gdk_service_role
   apiGroup: rbac.authorization.k8s.io
 ```
 
@@ -197,7 +197,6 @@ spec:
 6. Add `spec.containers[0].env` for the environment variables `OCI_OS_NS` and `OCI_OS_BUCKET_NAME`.
 7.
 8. Add `imagePullSecrets` for OKE to pull a private container image from OCIR.
-
 
 You may now **proceed to the next lab**.
 
