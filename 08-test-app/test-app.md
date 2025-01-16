@@ -59,7 +59,7 @@ In this lab, you will:
 
 4. You should see the profile picture _foo.jpg_ downloaded in the __ directory in VS Code. Click the picture to view it.
 
-   ![View Picture](./images/view-pic-foo.jpg) !!!
+   ![View Picture](./images/view-pic-foo.jpg)
 
 5.  From the same terminal in VS Code, send an HTTP DELETE request to the `/pictures/foo` endpoint to delete the picture from the bucket:
 

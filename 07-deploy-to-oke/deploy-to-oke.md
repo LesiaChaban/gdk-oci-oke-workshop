@@ -87,7 +87,7 @@ In this lab, you will:
 
 	```bash
 	<copy>
-	envsubst < k8s-oci.yml | kubectl apply -f
+	envsubst < k8s-oci.yml | kubectl apply -f -
 	</copy>
 	```
 
@@ -101,8 +101,8 @@ In this lab, you will:
 
    Output:
       ```txt
-      NAME                      READY   STATUS    RESTARTS   AGE
-      api-6fb4cd949f-kxxx8      1/1     Running   0          13s
+      NAME                   READY   STATUS    RESTARTS   AGE
+      oci-7696b44fd5-xsdcj   1/1     Running   0          48s
       ```
 
 5.  Run the command to check the status of the microservices:
@@ -115,8 +115,8 @@ In this lab, you will:
 
    Output:
       ```txt
-      NAME         TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)             AGE
-      api          LoadBalancer   10.96.70.48    129.146.149.81   8080:31666/TCP      2m9s
+      NAME   TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)             AGE
+      oci    LoadBalancer   10.96.9.53    129.146.149.81   8080:31666/TCP      2m9s
       ```
 
    If the `EXTERNAL-IP` property of the api service has a "pending" status, wait a few seconds and then run the command again. If the <pending> status persists for more than one minute, try the following:

@@ -192,7 +192,7 @@ In this lab, you will:
 	</copy>
 	```
 
-## Task 4: Configure OCI OKE Workload Identity Authentication
+## Task 4: Configure OCI Instance Principal Authentication and OCI OKE Workload Identity Authentication
 
 1. In VS Code, open `bootstrap-oraclecloud.properties`. The application is configured to use `OCI OKE Workload Identity Authentication` when it is running on an OCI Compute Instance.
 
@@ -202,7 +202,9 @@ In this lab, you will:
 	oci.config.oke-workload-identity.enabled=true
 	```
 
-2. From the Oracle Cloud Console navigation menu, go to **Identity & Security >> Identity >> Policies**.
+2. The following steps show you how to set up `Instance Principal` using a `Dynamic Group`-less `Policy` in OCI to access to the OKE cluster from the Livlabs VM instance (`kubectl` and `oci cli`) and `Workload Identity` authentication to allow the application running in OKE to manage (upload, list, download, and delete) objects in the OCI Object Storage bucket.
+
+3. From the Oracle Cloud Console navigation menu, go to **Identity & Security >> Identity >> Policies**.
 
 	![Policies Menu](https://oracle-livelabs.github.io/common/images/console/id-policies.png)
 
@@ -216,15 +218,23 @@ In this lab, you will:
 
 8. In the **Policy Builder** section, click **Show manual editor**.
 
-9. Enter the following policy statements in the text area. Replace the placeholders `WORKSHOP_COMPARTMENT_NAME` with your workshop compartment name, and `K8S_NAMESPACE` with the namespace value.
+9. Enter the following policy statements in the text area. Replace the placeholders `WORKSHOP_COMPARTMENT_NAME` with your workshop compartment name, `WORKSHOP_COMPARTMENT_OCID` with your workshop compartment OCID, `K8S_NAMESPACE` with the namespace value and `CLUSTER_ID` with your cluster ID.
 
 	```text
 	<copy>
-	Allow any-user to manage objects in compartment WORKSHOP_COMPARTMENT_NAME where all {request.principal.type='workload', request.principal.namespace ='K8S_NAMESPACE', request.principal.service_account = 'gdk-service-acct', request.principal.cluster_id = 'your cluster ID'}
+	Allow any-user to manage cluster-family in compartment WORKSHOP_COMPARTMENT_NAME where ALL { request.principal.type='instance', request.principal.compartment.id='WORKSHOP_COMPARTMENT_OCID' }
+	</copy>
+	```
+
+	```text
+	<copy>
+	Allow any-user to manage objects in compartment WORKSHOP_COMPARTMENT_NAME where all {request.principal.type='workload', request.principal.namespace ='K8S_NAMESPACE', request.principal.service_account = 'gdk-service-acct', request.principal.cluster_id ='CLUSTER_ID'}
 	</copy>
 	```
 
 	To learn more about workloads access to OCI Resources, see [Granting Workloads Access to OCI Resources](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contenggrantingworkloadaccesstoresources.htm).
+
+</if>
 
 	To learn more about the supported authentication options, see [Micronaut Oracle Cloud Authentication](https://micronaut-projects.github.io/micronaut-oracle-cloud/snapshot/guide/#authentication).
 
