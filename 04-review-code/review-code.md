@@ -34,7 +34,7 @@ _oci/pom.xml_
 	</dependency>
 	<dependency>
 		<groupId>io.micronaut.oraclecloud</groupId>
-		<artifactId>micronaut-oraclecloud-sdk</artifactId>
+		<artifactId>micronaut-oraclecloud-httpclient-netty</artifactId>
 		<scope>compile</scope>
 	</dependency>
     ```
@@ -63,7 +63,7 @@ _lib/pom.xml_
 
 _oci/pom.xml_
 
-    ```
+
     <properties>
         ...
         <exec.mainClass>com.example.Application</exec.mainClass>
@@ -74,29 +74,26 @@ _oci/pom.xml_
         <!-- Using the OCIR Repo to push the generated runtime image containing the native executable -->
         <jib.to.image>${env.OCI_OS_OKE_IMAGE}</jib.to.image>
     </properties>
-    ```
 
 2. The build file enable `jib-maven-plugin` for the application:
 
 _oci/pom.xml_
 
-    ```properties
     <build>
-    <plugins>
-    <plugin>
-        <groupId>com.google.cloud.tools</groupId>
-        <artifactId>jib-maven-plugin</artifactId>
-        <configuration>
-        <to>
-            <!-- <image>${project.name}</image> -->
-            <image>${jib.to.image}</image>
-        </to>
-        <from>
-            <image>${jib.from.image}</image>
-        </from>
-        </configuration>
-    </plugin>
-    ```
+        <plugins>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <configuration>
+                    <to>
+                        <!-- <image>${project.name}</image> -->
+                        <image>${jib.to.image}</image>
+                    </to>
+                    <from>
+                        <image>${jib.from.image}</image>
+                    </from>
+                </configuration>
+            </plugin>
 
 ## Task 3: Review the Controller API
 
@@ -233,11 +230,11 @@ _lib/src/main/java/com/example/ProfilePicturesController.java_
 
 ## Task 8: Review the Kubernetes API configuration files
 
-1. Review the _auth.yml_ configuration file.
+Review the _auth.yml_ configuration file.
 
-    _auth.yml_
+_auth.yml_
 
-    ```code
+```
     apiVersion: v1
     kind: Namespace # <1>
     metadata:
@@ -271,21 +268,21 @@ _lib/src/main/java/com/example/ProfilePicturesController.java_
     kind: Role
     name: gdk_service_role
     apiGroup: rbac.authorization.k8s.io
-    ```
+```
 
-    1. `K8S_NAMESPACE` placeholder for a `Namespace` that will be populated by Kubernetes
+1. `K8S_NAMESPACE` placeholder for a `Namespace` that will be populated by Kubernetes
 
-    2. Create a service account named `gdk-service-acct`
+2. Create a service account named `gdk-service-acct`
 
-    3. Create a role named `gdk_service_role`
+3. Create a role named `gdk_service_role`
 
-    4. Bind the `gdk_service_role` role to the `gdk-service-acct` service account.
+4. Bind the `gdk_service_role` role to the `gdk-service-acct` service account.
 
-2. Review the _k8s-oci.yml_ configuration file.
 
-    _k8s-oci.yml_
+Review the _k8s-oci.yml_ configuration file.
 
-    ```code
+_k8s-oci.yml_
+
     apiVersion: apps/v1
     kind: Deployment
     metadata:
@@ -349,7 +346,7 @@ _lib/src/main/java/com/example/ProfilePicturesController.java_
     ports:
         - protocol: "TCP"
         port: 8080
-    ```
+
 
 1. Add `metadata.namespace` to segregate user-defined resources and to simplify resource cleanup.
 
