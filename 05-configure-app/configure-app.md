@@ -33,13 +33,22 @@ In this lab, you will:
 
 1. Open a new terminal in VS Code using the **Terminal > New Terminal** menu.
 
-2. Set the environment variable `OCI_OS_NS` to store the tenancy namespace. Replace the placeholder `<your-tenancy-namespace>` with your value.
+2. Set the environment variable `OCI_OS_NS` to store your tenancy namespace. 
+
+	```bash
+	<copy>
+	export OCI_OS_NS=$(oci os ns get --auth instance_principal --query "data" --raw-output)
+	</copy>
+	```	
+
+	Alternatively, run the following command to set the value manually. Replace the placeholder `<your-tenancy-namespace>` with your value. To get the value, go to Oracle Cloud Console >> **Profile** icon on the top right >> Tenancy details >> Object Storage namespace.
 
 	```bash
 	<copy>
 	export OCI_OS_NS='<your-tenancy-namespace>'
 	</copy>
 	```
+
 
 3. Confirm the value set by running the following command:
 

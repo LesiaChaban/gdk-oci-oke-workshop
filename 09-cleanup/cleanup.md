@@ -16,6 +16,7 @@ In this lab, you will:
 * Delete the OKE cluster (and VCN)
 * Delete the Object Storage bucket
 * Delete the OKE Workload Identity policy
+* Delete the Auth Token
 * Destroy Stack
 * Delete the Stack
 * (Optional) Purge local docker resources
@@ -44,11 +45,13 @@ From the Oracle Cloud Console, clean up the resources provisioned for this works
 
 7. From **Identity & Security >> Identity >> Policies**, delete the Workload Identity policy.
 
-8. From **Resource Manager >> Stacks >> Stack Details** screen, run **Destroy** to delete the VCN and the Compute instance.
+8. From **Profile** icon on the top right >> go to **Profile details** >> **Resources** >> **Auth tokens**. Use **Delete** to delete the auth token.
 
-9. From **Resource Manager >> Stacks >> Stack Details** screen, **Delete** the stack.
+9. From **Resource Manager >> Stacks >> Stack Details** screen, run **Destroy** to delete the VCN and the Compute instance.
 
-10. (Optional) From the same terminal in VS Code, run the command to purge all local docker resources (images, containers, volumes, etc.)
+10. From **Resource Manager >> Stacks >> Stack Details** screen, **Delete** the stack.
+
+11. (Optional) From the same terminal in VS Code, run the command to purge all local docker resources (images, containers, volumes, etc.)
 
     ```bash
     <copy>

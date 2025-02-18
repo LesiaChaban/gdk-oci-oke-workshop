@@ -19,7 +19,7 @@ In this lab, you will:
 
 	```bash
 	<copy>
-	export IP=$(kubectl get svc oci -n=$K8S_NAMESPACE -o json | jq -r .status.loadBalancer.ingress[0].ip)
+	export IP=$(kubectl get svc gdk-os-oke-oci -n=$K8S_NAMESPACE -o json | jq -r .status.loadBalancer.ingress[0].ip)
 	</copy>
 	```
 
