@@ -1,8 +1,8 @@
-# Provision an OKE Cluster, Container Repository and Object Storage bucket
+# Provision an OKE Cluster, an OCIR Repository, and an Object Storage bucket
 
 ## Introduction
 
-This lab describes the steps to create a new OCI Kubernetes Cluster(OKE), Container Repository and Object Storage bucket.
+This lab describes the steps to create an OKE Cluster, an OCIR Repository, and an Object Storage bucket.
 
 Estimated Lab Time: 10 minutes
 
@@ -11,16 +11,16 @@ Estimated Lab Time: 10 minutes
 In this lab, you will:
 
 * Provision an OKE Cluster
-* Provision a Container Repository
+* Provision an OCIR Repository
 * Provision an Object Storage bucket
 
 ## Task 1: Provision an OKE Cluster
 
-1. From the Oracle Cloud Console, open the navigation menu, click **Developer Services >> Containers & Artifacts** and then click **Kubernetes Clusters (OKE)**.
+1. From the Oracle Cloud Console, open the navigation menu, click **Developer Services**. Under **Containers & Artifacts**, click **Kubernetes Clusters (OKE)**.
 
-   ![Oracle Kubernetes Clusters (OKE) menu](https://oracle-livelabs.github.io/common/images/console/ds-kebernetes-clusters.png)
+   ![Oracle Kubernetes Clusters (OKE) menu](https://oracle-livelabs.github.io/common/images/console/developer-OKE.png)
 
-2. Select your workshop compartment from the **Compartment** drop down list on the left. To find the compartment name, return to the **Login Details** screen, then copy the value of the **Compartment Name**, paste it in the **Compartment** drop down list in the Oracle Cloud Console and select the filtered compartment.
+2. Select your workshop compartment from the **Compartment** drop down list on the left. 
 
     ![Containers & Artifacts Landing Page](images/compartment-name-oke.png#input)
 
@@ -32,7 +32,7 @@ In this lab, you will:
 
     ![Create cluster Info](images/create-cluster-info.png#input)
 
-5. Enter the name for your cluster, for example, `gdk-k8s`. Select `Public Endpoint` for the Kubernetes API endpoint; `Private Workers` for worker nodes; and select the default the shape. Click **Next**.
+5. A single-node cluster is sufficient for this workshop. Enter the name for your cluster, for example, `gdk-k8s`. Select `Public Endpoint` for the Kubernetes API endpoint; `Managed` for Node type, `Private workers` for Kubernetes worker nodes, `VM.Standard.E5.Flex` for the Pod shape, and `1` for Node count. Click **Next**.
 
     ![Add cluster Details](images/add-cluster-details.png)
 
@@ -40,15 +40,17 @@ In this lab, you will:
 
     ![Create configured cluster Button](images/create-cluster-2.png)
 
-    It may take a few minutes to create all the resources. When they are all complete, click **Close**.
+    It may take a few minutes to accept the request. When complete, click **Close**. 
+    
+    The system will need several minutes to provision the underlying resources. Meanwhile, we can proceed ahead with the rest of the workshop.
 
-## Task 2: Provision a Container Repository
+## Task 2: Provision an OCIR Repository
 
-1. From the Oracle Cloud Console, open the navigation menu, click **Developer Services >> Containers & Artifacts** and then click **Container Registry**.
+1. From the Oracle Cloud Console, open the navigation menu, click **Developer Services**. Under **Containers & Artifacts**,click **Container Registry**.
 
-   ![Oracle Container Registry menu](https://oracle-livelabs.github.io/common/images/console/ds-kebernetes-clusters.png)
+   ![Oracle Container Registry menu](https://oracle-livelabs.github.io/common/images/console/developer-container-registry.png)
 
-2. Select your workshop compartment from the **Compartment** drop down list on the left. To find the compartment name, return to the **Login Details** screen, then copy the value of the **Compartment Name**, paste it in the **Compartment** drop down list in the Oracle Cloud Console and select the filtered compartment.
+2. Select your workshop compartment from the **Compartment** drop down list on the left. 
 
     ![Containers & Artifacts Landing Page](images/compartment-name-container.png#input)
 
@@ -66,9 +68,9 @@ In this lab, you will:
 
    ![Object Storage buckets menu](https://oracle-livelabs.github.io/common/images/console/storage-buckets.png)
 
-2. Select your workshop compartment from the **Compartment** drop down list on the left. To find the compartment name, return to the **Login Details** screen, then copy the value of the **Compartment Name**, paste it in the **Compartment** drop down list in the Oracle Cloud Console and select the filtered compartment.
+2. Select your workshop compartment from the **Compartment** drop down list on the left.
 
-   ![Buckets Landing Page](images/buckets-landing-page.png)
+   ![Buckets Landing Page](images/buckets-landing-page.jpg)
 
 3. Click **Create Bucket**.
 
@@ -78,13 +80,19 @@ In this lab, you will:
 
    ![Create Bucket](images/create-bucket.jpg)
 
-   The bucket gets created in a few seconds. The next task describes how to view the bucket details.
+   The bucket gets created in a few seconds.
 
-5. On the bucket details screen, scroll down to the **Objects** list. There are no objects listed because the bucket is empty.
+5. You will see your bucket in the **Buckets** list. Click the bucket name hyperlink to go to the bucket details screen.
+
+   ![Buckets list](images/buckets-list.jpg)
+
+6. On the bucket details screen, scroll down to the **Objects** list. There are no objects listed because the bucket is empty.
 
    ![Bucket details and Objects list](images/objects-list.jpg)
 
-Congratulations! In this lab, you created a new OCI Kubernetes Cluster(OKE), Container Repository and Object Storage bucket in your workshop compartment.
+7. Note down the bucket name. You will need it in the next lab.
+
+Congratulations! In this lab, you created an OKE Cluster, an OCIR Repository, and an Object Storage bucket in your workshop compartment.
 
 You may now **proceed to the next lab**.
 
