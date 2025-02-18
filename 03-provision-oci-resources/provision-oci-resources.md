@@ -32,7 +32,7 @@ In this lab, you will:
 
     ![Create cluster Info](images/create-cluster-info.png#input)
 
-5. A single-node cluster is sufficient for this workshop. Enter the name for your cluster, for example, `gdk-k8s`. Select `Public Endpoint` for the Kubernetes API endpoint; `Managed` for Node type, `Private workers` for Kubernetes worker nodes, `VM.Standard.E5.Flex` for the Pod shape, and `1` for Node count. Click **Next**.
+5. We will use an `Enhanced` cluster type as we are using OCI Workload Identity authentication in this workshop. A single-node cluster is sufficient for this workshop. Enter the name for your cluster, for example, `gdk-k8s`. Select `Public Endpoint` for the Kubernetes API endpoint; `Managed` for Node type, `Private workers` for Kubernetes worker nodes, `VM.Standard.E5.Flex` for the Pod shape, and `1` for Node count. Click **Next**.
 
     ![Add cluster Details](images/add-cluster-details.png)
 
