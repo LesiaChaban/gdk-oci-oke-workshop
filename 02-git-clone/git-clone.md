@@ -24,16 +24,16 @@ In this lab, you will:
 	cd lab
 	git remote add origin https://github.com/oracle-samples/gdk-micronaut-samples.git
 	git config core.sparsecheckout true
-	echo "gdk-oci-oke/*">>.git/info/sparse-checkout
+	echo "gdk-oci-oke-mvn/*">>.git/info/sparse-checkout
 	git pull --depth=1 origin main
 	</copy>
 	```
 
-3. Open the sample application source code from the _gdk-oci-oke_ directory in **Visual Studio Code**.
+3. Open the sample application source code from the _gdk-oci-oke-mvn_ directory in **Visual Studio Code**.
 
 	``` bash
 	<copy>
-	code gdk-oci-oke
+	code gdk-oci-oke-mvn
 	</copy>
 	```
 
