@@ -161,7 +161,7 @@ In this lab, you will:
 
 ## Task 3: Configure the Application to connect to the Oracle Cloud Infrastructure Registry
 
-1. 1. From the Oracle Cloud Console, click the **Profile** icon on the top right. Then click on **Account email**.
+1. From the Oracle Cloud Console, click the **Profile** icon on the top right. Then click on **Account email**.
 
 	![Profile icon](images/profile-icon.jpg#input)
 

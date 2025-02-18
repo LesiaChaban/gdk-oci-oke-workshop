@@ -46,7 +46,7 @@ In this lab, you will:
 
 ## Task 2: Provision an OCIR Repository
 
-1. From the Oracle Cloud Console, open the navigation menu, click **Developer Services**. Under **Containers & Artifacts**,click **Container Registry**.
+1. From the Oracle Cloud Console, open the navigation menu, click **Developer Services**. Under **Containers & Artifacts**, click **Container Registry**.
 
    ![Oracle Container Registry menu](https://oracle-livelabs.github.io/common/images/console/developer-container-registry.png)
 
