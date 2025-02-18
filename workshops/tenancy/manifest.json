@@ -1,5 +1,5 @@
 {
-  "workshoptitle": "Deploy a Java Microservice to Oracle Cloud Infrastructure Container Engine for Kubernetes (OKE) using the Graal Development Kit for Micronaut (GDK)",
+  "workshoptitle": "Deploy a Java microservice to Oracle Cloud Infrastructure Container Engine for Kubernetes (OKE) using the Graal Development Kit for Micronaut (GDK)",
   "variables": ["../../variables/variables.json"],
   "help": "livelabs-help-oci_us@oracle.com",
   "tutorials": [
@@ -33,7 +33,7 @@
       "filename": "../../02-git-clone/git-clone.md"
     },
     {
-      "title": "Lab 2: Provision an OKE Cluster, Container Repository and Object Storage bucket",
+      "title": "Lab 2: Provision an OKE Cluster, OCIR Repository and Object Storage bucket",
       "filename": "../../03-provision-oci-resources/provision-oci-resources.md"
     },
     {
@@ -46,7 +46,7 @@
       "type": "tenancy"
     },
     {
-      "title": "Lab 5: Build and Run a Native Executable",
+      "title": "Lab 5: Build a Containerised Native Executable",
       "filename": "../../06-build-run-native/build-run-native.md",
       "type": "tenancy"
     },
