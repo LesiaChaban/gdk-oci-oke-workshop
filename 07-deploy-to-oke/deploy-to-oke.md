@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This lab provides instructions for deploy the application to OCI Container Engine for Kubernetes (OKE).
+This lab provides instructions to deploy the application to OKE.
 
 Estimated Lab Time: 05 minutes
 
@@ -10,12 +10,12 @@ Estimated Lab Time: 05 minutes
 
 In this lab, you will:
 
-* Provide the local access to your OKE cluster
-* Deploy the application to OKE
+* Configure access to your OKE cluster
+* Deploy the application to the OKE cluster
 
-## Task 1: Provide the local access to your OKE cluster
+## Task 1: Configure access to your OKE cluster
 
-1. In the same terminal in VS Code, run the command to create a directory for a `kubectl` configuration:
+1. In the same terminal in VS Code, run the command:
 
 	```bash
 	<copy>
@@ -23,7 +23,7 @@ In this lab, you will:
 	</copy>
 	```
 
-2. Generate a `kubectl` configuration for authentication to OKE:
+2. Generate the Kubernetes configuration for authentication to OKE:
 
 	```bash
 	<copy>
@@ -36,7 +36,7 @@ In this lab, you will:
 	</copy>
 	```
 
-3. Set `KUBECONFIG` to the created config file, as shown below. (This variable is consumed by `kubectl`.):
+3. Set the environment variable `KUBECONFIG` to the created config file, as shown below. This variable is used by `kubectl`.
 
 	```bash
 	<copy>
@@ -44,7 +44,7 @@ In this lab, you will:
 	</copy>
 	```
 
-4. Run the following command to check access.
+4. Run the following command to check access to your OKE cluster.
 
 	```bash
 	<copy>
@@ -61,9 +61,9 @@ In this lab, you will:
       To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
       ```
 
-## Task 2:  Deploy the application to OKE
+## Task 2:  Deploy the application to the OKE cluster
 
-1. In the same terminal in VS Code, run the command to create the Kubernetes namespace. Use placeholders that will be substituted using environment variables.
+1. In the same terminal in VS Code, run the following command to create Kubernetes resources defined in _auth.yml_. The placeholders in the yml file will be substituted using environment variables.
 
 	```bash
 	<copy>
@@ -71,7 +71,7 @@ In this lab, you will:
 	</copy>
 	```
 
-2. Create an `ocirsecret` secret for authentication to Container Registry using the command below. The secret is a object to store user credential data (encrypted data), for example, the database username and password. In this case, OKE uses it to authenticate to Container Registry to be able to pull microservices container images.
+2. Create a Kubernetes secret `ocirsecret` with your OCIR credentials using the following command. OKE uses this secret to authenticate to OCIR and pull the container image.
 
 	```bash
 	<copy>
@@ -83,7 +83,7 @@ In this lab, you will:
 	</copy>
 	```
 
-3. Deploy the microservice container image on OKE. Use placeholders that will be substituted using environment variables.
+3. Deploy the application on OKE using the following command. The placeholders in the yml file will be substituted using environment variables.
 
 	```bash
 	<copy>
@@ -91,7 +91,7 @@ In this lab, you will:
 	</copy>
 	```
 
-4. Run the following command to check the status of the pods and make sure that all of them have the status `Running`:
+4. Run the following command to check the status of the Kubernetes pod and make sure that it has the status `Running`:
 
 	```bash
 	<copy>
@@ -100,12 +100,13 @@ In this lab, you will:
 	```
 
    Output:
+
       ```txt
       NAME                   READY   STATUS    RESTARTS   AGE
       oci-7696b44fd5-xsdcj   1/1     Running   0          48s
       ```
 
-5.  Run the command to check the status of the microservices:
+5.  Run the following command to check the status of the Kubernetes service:
 
 	```bash
 	<copy>
@@ -114,12 +115,13 @@ In this lab, you will:
 	```
 
    Output:
+
       ```txt
       NAME   TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)             AGE
       oci    LoadBalancer   10.96.9.53    129.146.149.81   8080:31666/TCP      2m9s
       ```
 
-   If the `EXTERNAL-IP` property of the api service has a "pending" status, wait a few seconds and then run the command again. If the <pending> status persists for more than one minute, try the following:
+   If the `EXTERNAL-IP` property of the service has a "pending" status, wait a few seconds and then run the command again. If the "pending" status persists for more than one minute, try the following:
 
       1. Verify that a Load Balancer was created:
 
@@ -129,7 +131,7 @@ In this lab, you will:
 
          c. Click **Load balancer**.
 
-         d. Ensure a Load Balancer has been created for your service.
+         d. Ensure a Load Balancer has been created for your service in your workshop compartment.
 
       2. Check Load Balancer quota (if a Load Balancer was not created, you may have reached the quota limit):
 

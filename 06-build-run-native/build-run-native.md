@@ -1,8 +1,8 @@
-# Build a native executable container image for the application and push it to OCIR
+# Build a native executable, package it in a container image and push the container image to OCIR
 
 ## Introduction
 
-This lab describes how to generate a native executable container image for the application and push it to the OCI Registry.
+This lab describes how to build a native executable for the application, package it in a container image, and push the container image to the OCIR Repository.
 
 You will use [GraalVM Native Image](https://docs.oracle.com/en/graalvm/jdk/17/docs/overview/)’s ahead-of-time compilation to build a native executable for the application.
 
@@ -16,10 +16,10 @@ Estimated Lab Time: 15 minutes
 
 In this lab, you will:
 
-* Build a native executable for the application
-* Push the microservice container image to the OCI Registry
+* Build a native executable for the application and package it in a container image
+* Push the container image to the OCIR Repository
 
-## Task 1: Build a native executable for the application
+## Task 1: Build a native executable for the application and package it in a container image
 
 1. In the same terminal in VS Code, check the version of the GraalVM native-image utility:
 
@@ -29,7 +29,7 @@ In this lab, you will:
 	</copy>
 	```
 
-2. To generate a native executable using Maven, run the following command:
+2. To generate a native executable and package it in a container image using Maven, run the following command:
 
 	``` bash
 	<copy>
@@ -37,11 +37,11 @@ In this lab, you will:
 	</copy>
 	```
 
-   It can take approximately 7-8 minutes to generate the native executable.
+   It can take approximately 6-7 minutes to generate the native executable.
 
-## Task 2: Push the microservice container image to the OCI Registry
+## Task 2: Push the container image to the OCIR Repository
 
-1. From the same terminal in VS Code run `docker login` to log in Container Registry.
+1. From the same terminal in VS Code, run `docker login` to log in to OCIR.
 
 	``` bash
 	<copy>
@@ -49,7 +49,7 @@ In this lab, you will:
 	</copy>
 	```
 
-2. Push the microservice container image to the remote repository.
+2. Push the container image to the OCIR Repository.
 
 	```bash
 	<copy>
@@ -57,7 +57,7 @@ In this lab, you will:
 	</copy>
 	```
 
-Congratulations! You've successfully completed this lab. Your microservice container image is now located under the Oracle Container Registry.
+Congratulations! You've successfully completed this lab. Your container image has been pushed to the OCIR Repository.
 
 You may now **proceed to the next lab**.
 
