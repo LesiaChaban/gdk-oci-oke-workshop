@@ -13,11 +13,11 @@ In this lab, you will:
 * Delete the Kubernetes namespace
 * Delete the image from the private OCIR repo
 * Delete the private OCIR repo
-* Delete OKE cluster
-* Delete Object Storage bucket
+* Delete the OKE cluster (and VCN)
+* Delete the Object Storage bucket
+* Delete the OKE Workload Identity policy
 * Destroy Stack
 * Delete the Stack
-* Delete the OKE Workload Identity policy
 * (Optional) Purge local docker resources
 
 ## Task 1: Cleanup
@@ -36,17 +36,19 @@ From the Oracle Cloud Console, clean up the resources provisioned for this works
 
 3. From **Developer Services** >> **Container Registry** >> search for your repo >> use **Delete repository** to delete the OCIR repository.
 
-4. From **Developer Services** >> **Kubernetes Clusters (OKE)** >> navigate to your cluster details section >> use **Delete** to delate it.
+4. From **Developer Services** >> **Kubernetes Clusters (OKE)** >> navigate to your cluster details section >> use **Delete** to delete it. 
 
-5. From **Storage >> Object Storage & Archive Storage >> Buckets**, delete the **Bucket**.
+5. If the VCN provisioned by the OKE cluster isn't automatically deleted, you can delete it manually from **Networking** >> **Virtual cloud networks**.
 
-6. From **Resource Manager >> Stacks >> Stack Details** screen, run **Destroy** to delete the VCN and the Compute instance.
+6. From **Storage >> Object Storage & Archive Storage >> Buckets**, delete the **Bucket**.
 
-7. From **Resource Manager >> Stacks >> Stack Details** screen, **Delete** the stack.
+7. From **Identity & Security >> Identity >> Policies**, delete the Workload Identity policy.
 
-8. From **Identity & Security >> Identity >> Policies**, delete the Workload Identity policy.
+8. From **Resource Manager >> Stacks >> Stack Details** screen, run **Destroy** to delete the VCN and the Compute instance.
 
-9. (Optional) From the same terminal in VS Code, run the command to purge all local docker resources (images, containers, volumes, etc.)
+9. From **Resource Manager >> Stacks >> Stack Details** screen, **Delete** the stack.
+
+10. (Optional) From the same terminal in VS Code, run the command to purge all local docker resources (images, containers, volumes, etc.)
 
     ```bash
     <copy>
@@ -54,7 +56,7 @@ From the Oracle Cloud Console, clean up the resources provisioned for this works
     </copy>
     ```
 
-    Check it:
+    Check the result using:
 
     ```bash
     <copy>

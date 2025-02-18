@@ -1,4 +1,4 @@
-# Test the application with OCI Object Storage
+# Test the Application
 
 ## Introduction
 
@@ -10,19 +10,18 @@ Estimated Lab Time: 05 minutes
 
 In this lab, you will:
 
-* Configure external IP of the OCI Load Balancer
+* Get the external IP address of the OCI Load Balancer
 * Test the application
 
-## Task 1: Configure external IP of the OCI Load Balancer
+## Task 1: Get the external IP address of the OCI Load Balancer
 
-1. In the same terminal in VS Code, run the command to retrieve the URL of the microservice and set it as the value of the `IP` environment variable:
+1. In the same terminal in VS Code, run the following command to get the URL of the Kubernetes service (OCI Load Balancer) and set it in an environment variable:
 
 	```bash
 	<copy>
 	export IP=$(kubectl get svc oci -n=$K8S_NAMESPACE -o json | jq -r .status.loadBalancer.ingress[0].ip)
 	</copy>
 	```
-
 
 2. Confirm the value set by running the following command:
 
@@ -57,7 +56,7 @@ In this lab, you will:
 	</copy>
 	```
 
-4. You should see the profile picture _foo.jpg_ downloaded in the __ directory in VS Code. Click the picture to view it.
+4. You should see the profile picture _foo.jpg_ downloaded in your project's root directory in VS Code. Click the picture to view it.
 
    ![View Picture](./images/view-pic-foo.jpg)
 

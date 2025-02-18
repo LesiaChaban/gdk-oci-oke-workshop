@@ -1,8 +1,8 @@
 # Conclusion
 
-In this workshop, you've learnt how to deploy a Java Microservice to Oracle Cloud Infrastructure Container Engine for Kubernetes (OKE) using the Graal Development Kit for Micronaut (GDK).
+In this workshop, you've learnt how to deploy a Java microservice to OCI Container Engine for Kubernetes (OKE) using the Graal Development Kit for Micronaut (GDK).
 
-You've seen how to use GraalVM Native Image to package the application as a native executable and push the microservice container image to the OCI Registry.
+You've seen how to use GraalVM Native Image to build a native executable for the application, package it in a container image, and push the container image to OCI Registry (OCIR).
 
 Application developers can use the Graal Development Kit for Micronaut (GDK) to build cloud-portable Java applications on Oracle Cloud Infrastructure with Micronaut and GraalVM Native Image.
 
