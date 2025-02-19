@@ -39,14 +39,7 @@ _oci/pom.xml_
 		<scope>compile</scope>
 	</dependency>
 
-2. The build files contain the following dependencies to enable [OKE Workload Identity Authentication](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contenggrantingworkloadaccesstoresources.htm).
-
-_lib/pom.xml_
-
-    <dependency>
-        <groupId>io.micronaut.oraclecloud</groupId>
-        <artifactId>micronaut-oraclecloud-oke-workload-identity</artifactId>
-    </dependency>
+2. The build file contains the following dependencies to enable [OKE Workload Identity Authentication](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contenggrantingworkloadaccesstoresources.htm).
 
 _oci/pom.xml_
 
