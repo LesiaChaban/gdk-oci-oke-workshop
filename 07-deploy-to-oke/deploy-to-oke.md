@@ -99,14 +99,14 @@ In this lab, you will:
 	</copy>
 	```
 
-   Output:
+   The output should look like the following:
 
       ```txt
       NAME                   READY   STATUS    RESTARTS   AGE
       oci-7696b44fd5-xsdcj   1/1     Running   0          48s
       ```
 
-5.  Run the following command to check the status of the Kubernetes service:
+5.  Run the following command to check the status of the Kubernetes service (maps to an OCI Load Balancer for this workshop):
 
 	```bash
 	<copy>
@@ -114,7 +114,7 @@ In this lab, you will:
 	</copy>
 	```
 
-   Output:
+   The output should look like the following:
 
       ```txt
       NAME   TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)             AGE

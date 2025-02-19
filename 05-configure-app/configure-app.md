@@ -90,7 +90,7 @@ In this lab, you will:
 	</copy>
 	```
 
-8. Set the environment variable `OCI_CLUSTER_ID` to store your OKE cluster ID. Replace the placeholder `<your-cluster-OCID>` with your value.
+8. Set the environment variable `OCI_CLUSTER_ID` to store the OCID of your OKE cluster. Replace the placeholder `<your-cluster-OCID>` with your value.
 
 	```bash
 	<copy>
@@ -122,7 +122,7 @@ In this lab, you will:
 	</copy>
 	```
 
-12. Set the environment variable `K8S_NAMESPACE` to store your Kubernetes namespace.
+12. Set the environment variable `K8S_NAMESPACE` to store your Kubernetes namespace. This value is used in the Kubernetes yml files used to deploy your application to OKE.
 
 	```bash
 	<copy>
@@ -230,7 +230,7 @@ In this lab, you will:
 
 8. In the **Policy Builder** section, click **Show manual editor**.
 
-9. Enter the following policy statements in the text area. Replace the placeholders `WORKSHOP_COMPARTMENT_NAME` with your workshop compartment name, `WORKSHOP_COMPARTMENT_OCID` with your workshop compartment OCID, `K8S_NAMESPACE` with the Kubernetes namespace value, and `CLUSTER_ID` with your OKE cluster OCID.
+9. Enter the following policy statement in the text area. Replace the placeholders `WORKSHOP_COMPARTMENT_NAME` with your workshop compartment name, `K8S_NAMESPACE` with the Kubernetes namespace value set above, and `CLUSTER_ID` with the OCID of your OKE cluster.
 
 	```text
 	<copy>
