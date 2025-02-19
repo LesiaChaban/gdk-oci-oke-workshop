@@ -262,14 +262,13 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
-1. Create a Kubernetes namespace whose name is set using the environment variable `K8S_NAMESPACE`.
+  1. Create a Kubernetes namespace whose name is set using the environment variable `K8S_NAMESPACE`.
 
-2. Create a Kubernetes service account named `gdk-service-acct`.
+  2. Create a Kubernetes service account named `gdk-service-acct`.
 
-3. Create a Kubernetes role named `gdk_service_role`.
+  3. Create a Kubernetes role named `gdk_service_role`.
 
-4. Bind the role `gdk_service_role` to the service account `gdk-service-acct`.
-
+  4. Bind the role `gdk_service_role` to the service account `gdk-service-acct`.
 
 Review the _k8s-oci.yml_ configuration file.
 
@@ -341,21 +340,21 @@ spec:
       port: 8080
 ```
 
-1. Add `metadata.namespace` to segregate user-defined resources and to simplify resource cleanup.
+  1. Add `metadata.namespace` to segregate user-defined resources and to simplify resource cleanup.
 
-2. Add `spec.serviceAccountName` to associate the service account with the pod. Add `spec.automountServiceAccountToken` and set it to `true`. These are needed to enable OKE Workload Identity for this deployment.
+  2. Add `spec.serviceAccountName` to associate the service account with the pod. Add `spec.automountServiceAccountToken` and set it to `true`. These are needed to enable OKE Workload Identity for this deployment.
 
-3. Update the `spec.containers[0].image` to point to your image in OCIR using the environment variable `OCI_OS_OKE_IMAGE`.
+  3. Update the `spec.containers[0].image` to point to your image in OCIR using the environment variable `OCI_OS_OKE_IMAGE`.
 
-4. Add `spec.containers[0].imagePullPolicy`. In this example, we set it to `Always`.
+  4. Add `spec.containers[0].imagePullPolicy`. In this example, we set it to `Always`.
 
-5. Add `spec.containers[0].env` to set the container environment variables `OCI_OS_NS` and `OCI_OS_BUCKET_NAME`. These two variables are used by the GDK application to access the OCI Object Storage Bucket at runtime.
+  5. Add `spec.containers[0].env` to set the container environment variables `OCI_OS_NS` and `OCI_OS_BUCKET_NAME`. These two variables are used by the GDK application to access the OCI Object Storage Bucket at runtime.
 
-6. Set the container environment variable `MICRONAUT_ENVIRONMENTS` to `oraclecloud` to enable Micronaut to load the appropriate configuration file while starting the application.
+  6. Set the container environment variable `MICRONAUT_ENVIRONMENTS` to `oraclecloud` to enable Micronaut to load the appropriate configuration file while starting the application.
 
-7. Add `imagePullSecrets` for OKE to pull a private container image from OCIR.
+  7. Add `imagePullSecrets` for OKE to pull a private container image from OCIR.
 
-8. Use these annotations to provision an [OCI Load Balancer with a flexible shape](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengcreatingloadbalancers-subtopic.htm#flexible).
+  8. Use these annotations to provision an [OCI Load Balancer with a flexible shape](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengcreatingloadbalancers-subtopic.htm#flexible).
 
 You may now **proceed to the next lab**.
 

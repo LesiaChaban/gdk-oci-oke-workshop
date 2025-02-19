@@ -40,8 +40,8 @@ In this lab, you will:
 
     ![Create configured cluster Button](images/create-cluster-2.png)
 
-    It may take a few minutes to accept the request. When complete, click **Close**. 
-    
+    It may take a few minutes to accept the request. When complete, click **Close**.
+
     The system will need several minutes to provision the underlying resources. Meanwhile, we can proceed ahead with the rest of the workshop.
 
 ## Task 2: Provision an OCIR Repository
@@ -50,7 +50,7 @@ In this lab, you will:
 
    ![Oracle Container Registry menu](https://oracle-livelabs.github.io/common/images/console/developer-container-registry.png)
 
-2. Select your workshop compartment from the **Compartment** drop down list on the left. 
+2. Select your workshop compartment from the **Compartment** drop down list on the left.
 
     ![Containers & Artifacts Landing Page](images/compartment-name-container.png#input)
 
