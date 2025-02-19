@@ -26,7 +26,7 @@ In this lab, you will:
 
 From the Oracle Cloud Console, clean up the resources provisioned for this workshop:
 
-1. From the same terminal in VS Code, run the command to delete the Kubernetes namespace.
+1. From the same terminal in VS Code, run the following command to delete the Kubernetes namespace and related resources (service account, role, role binding, deployment, pod, service), including the OCI Load Balancer.
 
     ```bash
     <copy>
